@@ -57,7 +57,19 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
   const website = 'url' in company ? company.url : undefined
   return <article data-reveal className={'company-card company-' + company.id}>
     <div className="company-logo-stage">
-      <img className="company-logo-art" src={company.logo} alt={`Logótipo da ${company.name}`} loading="lazy" decoding="async"/>
+      <svg className="company-logo-art company-logo-transparent" role="img" aria-label={`Logótipo da ${company.name}`} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id={`company-logo-cutout-${company.id}`} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+            <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="luminance"/>
+            <feComponentTransfer in="luminance" result="cleanAlpha">
+              <feFuncA type="linear" slope="1.7" intercept="-0.2"/>
+            </feComponentTransfer>
+            <feFlood floodColor="#FFFFFF" result="white"/>
+            <feComposite in="white" in2="cleanAlpha" operator="in"/>
+          </filter>
+        </defs>
+        <image href={company.logo} x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet" filter={`url(#company-logo-cutout-${company.id})`}/>
+      </svg>
     </div>
     <div className="company-card-content">
       <h3>{company.name}</h3>

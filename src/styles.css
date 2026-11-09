@@ -48,3 +48,9 @@
 .president-copy p.president-intro{font-size:19px;line-height:1.65;color:#34383a;font-weight:600}
 @media(max-width:800px){.president-section{padding:80px 0}.president-layout{grid-template-columns:1fr;gap:40px}.president-portrait-placeholder{max-height:430px;max-width:420px;aspect-ratio:4/4.4}.president-kicker{margin-top:20px}}
 @media(max-width:480px){.president-portrait-placeholder{max-height:360px}.president-copy h2{font-size:43px}.president-copy p.president-intro{font-size:17px}}
+
+/* Fotografia oficial do Presidente: recorte editorial adequado a desktop e móvel. */
+.president-portrait{position:relative;width:100%;max-height:570px;aspect-ratio:4 / 4.8;border-radius:3px;overflow:hidden;background:#d9d8d5}
+.president-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+@media(max-width:800px){.president-portrait{max-width:420px;max-height:430px;aspect-ratio:4 / 4.4}}
+@media(max-width:480px){.president-portrait{max-height:400px}}

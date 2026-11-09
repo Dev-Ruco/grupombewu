@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 250" role="img" aria-labelledby="title desc">
+<title id="title">BNEWS</title><desc id="desc">BNEWS — Moçambique, África, Mundo</desc>
+<rect width="920" height="250" fill="#fff"/>
+<rect x="18" y="16" width="184" height="192" fill="#d40063"/>
+<path d="M53 49h77c46 0 64 19 64 48 0 20-11 34-30 41 23 6 34 21 34 43 0 36-27 54-73 54H53V49zm42 35v38h32c16 0 25-7 25-19 0-13-9-19-26-19H95zm0 71v43h34c18 0 27-8 27-22 0-14-9-21-28-21H95z" fill="#fff" transform="translate(-2 -14) scale(.93)"/>
+<path d="M55 191 97 149 97 191z" fill="#d40063"/>
+<rect x="245" y="16" width="4" height="192" fill="#171b20"/>
+<g font-family="Arial,Helvetica,sans-serif" font-size="129" font-weight="800" letter-spacing="-7" fill="#171b20"><text x="285" y="156">NEWS</text></g>
+<text x="290" y="211" fill="#171b20" font-size="23" font-family="Arial,Helvetica,sans-serif" letter-spacing="5.2">MOÇAMBIQUE</text>
+<circle cx="540" cy="202" r="4.5" fill="#d40063"/>
+<text x="562" y="211" fill="#171b20" font-size="23" font-family="Arial,Helvetica,sans-serif" letter-spacing="5.2">ÁFRICA</text>
+<circle cx="681" cy="202" r="4.5" fill="#d40063"/>
+<text x="702" y="211" fill="#171b20" font-size="23" font-family="Arial,Helvetica,sans-serif" letter-spacing="5.2">MUNDO</text>
+</svg>

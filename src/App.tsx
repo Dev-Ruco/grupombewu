@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import btvLogo from './assets/logos/empresas/btv.png'
 import mlcLogo from './assets/logos/empresas/maputo-luxury-cars.png'
-import bnewsLogo from './assets/logos/empresas/bnews.png'
+import bnewsLogo from './assets/logos/empresas/bnews-oficial.svg'
 import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
@@ -53,7 +53,7 @@ function Logo({footer=false}:{footer?:boolean}) {
 function CompanyCard({company, index}:{company:typeof companies[number],index:number}) {
   return <article className={'company-card company-' + company.accent} style={{animationDelay: (index*70) + 'ms'}}>
     <div className="company-top"><span className="company-number">0{index+1} / 06</span><ArrowUpRight size={19} aria-hidden="true"/></div>
-    <div className="company-logo-frame"><img className="company-logo-image" src={company.logo} alt={`Logótipo ${company.name}`} loading="lazy" decoding="async"/></div>
+    <div className={`company-logo-frame ${company.id === "bnews" ? "company-logo-frame-bnews" : ""}`}><img className={`company-logo-image ${company.id === "bnews" ? "company-logo-image-bnews" : ""}`} src={company.logo} alt={`Logótipo ${company.name}`} loading="lazy" decoding="async"/></div>
     <div className="company-bottom"><span className="eyebrow company-category">{company.category}</span><h3>{company.name}</h3><p>{company.short}</p>
     {'url' in company ? <a href={company.url} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={16}/></a> : <span className="company-link muted">Conheça a empresa <ArrowRight size={16}/></span>}
     </div>

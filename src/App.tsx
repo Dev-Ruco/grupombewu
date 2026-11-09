@@ -121,10 +121,27 @@ export default function App() {
         <div className="section-heading strengths-heading"><div><span className="eyebrow"><span className="tiny-line"/> A NOSSA ABORDAGEM</span><h2>Mais do que empresas.<br/><em>Uma visão de futuro.</em></h2></div><p>Construímos o nosso percurso através da diversidade de competências e de uma aposta na colaboração.</p></div>
         <div className="strengths-grid">{strengths.map((strength)=><article className="strength-card" key={strength.name}><strength.icon size={30} strokeWidth={1.5}/><h3>{strength.name}</h3><p>{strength.text}</p></article>)}</div>
       </div></section>
+      <section id="presidencia" className="president-section" aria-labelledby="president-title">
+        <div className="container president-layout">
+          <div className="president-visual">
+            <div className="president-portrait-placeholder" aria-label="Espaço reservado para fotografia oficial do Presidente">
+              <span className="president-monogram" aria-hidden="true">SPM</span>
+              <span className="president-photo-note">FOTOGRAFIA INSTITUCIONAL</span>
+            </div>
+          </div>
+          <div className="president-copy">
+            <span className="eyebrow dark-eyebrow">LIDERANÇA INSTITUCIONAL</span>
+            <span className="president-kicker">Presidente do Grupo Mbewu</span>
+            <h2 id="president-title">Salvador Pedro<br/><em>Maiaze.</em></h2>
+            <p className="president-intro">À frente do Grupo Mbewu, Salvador Pedro Maiaze representa a liderança institucional de uma organização que reúne empresas de diferentes sectores de actividade.</p>
+            <p>Esta secção apresenta a Presidência do Grupo. O percurso profissional e a mensagem institucional do Presidente serão acrescentados após validação dos respectivos conteúdos.</p>
+          </div>
+        </div>
+      </section>
       <section id="contactos" className="contact-section"><div className="container contact-layout"><div><span className="eyebrow">VAMOS CONVERSAR</span><h2>Novas ideias.<br/><em>Novas oportunidades.</em></h2><p>Quer estabelecer uma parceria ou saber mais sobre o Grupo Mbewu? Estamos disponíveis para conversar.</p><div className="contact-pending"><Mail size={18}/> Contactos oficiais em actualização</div><p className="contact-notice">Os canais de contacto serão activados após confirmação dos dados oficiais.</p></div><div className="contact-symbol"><TreeMark/><span>JUNTOS, CONSTRUÍMOS O FUTURO.</span></div></div></section>
     </main>
     <footer className="footer"><div className="container">
-      <div className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Maputo, Moçambique</span><span className="footer-line"><Mail size={16}/> Contacto por confirmar</span></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
+      <div className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Maputo, Moçambique</span><span className="footer-line"><Mail size={16}/> Contacto por confirmar</span></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Grupo Mbewu. Todos os direitos reservados.</span><span>Desenvolvido com visão de futuro.</span></div>
     </div></footer>
   </>

@@ -153,7 +153,7 @@ export default function App() {
       document.getElementById(id)?.scrollIntoView({behavior:'instant'})
     })
     return () => window.cancelAnimationFrame(raf)
-  }, [articleOpen])
+  }, [articleOpen,legalPage])
   useEffect(() => {
     const syncLocation = () => {
       setActiveArticle(getArticleFromHash())

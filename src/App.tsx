@@ -234,6 +234,7 @@ export default function App() {
         </div>
       </div>
       <article className="article-page-article">
+        <div className="article-shell">
         <header className="article-page-heading">
           <span className="article-category">BTV <span className="article-category-dot">·</span> EXPANSÃO</span>
           <h1 id="article-full-title">BTV reforça presença nacional com entrada na TVCABO</h1>
@@ -256,6 +257,7 @@ export default function App() {
             <p>A parceria alarga os meios de acesso à informação e ao entretenimento produzidos em Moçambique, ao mesmo tempo que fortalece a presença da BTV no mercado televisivo nacional.</p>
 
 
+        </div>
         </div>
         <aside className="article-related" aria-labelledby="related-title">
           <div className="article-related-heading">

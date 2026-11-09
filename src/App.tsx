@@ -253,7 +253,7 @@ export default function App() {
           <span className="article-category">BTV <span className="article-category-dot">·</span> EXPANSÃO</span>
           <h1 id="article-full-title">BTV reforça presença nacional com entrada na TVCABO</h1>
           <p className="article-page-standfirst">O canal alargou a sua distribuição ao integrar a grelha da TVCABO na posição 323, aproximando a programação de mais famílias moçambicanas.</p>
-          <div className="article-meta"><span>23 de Setembro de 2026</span><span className="article-meta-divider" aria-hidden="true"/> <span>BNEWS · Délio Timane</span></div>
+          <div className="article-meta"><span>23 de Setembro de 2026</span><span className="article-meta-divider" aria-hidden="true"/> <span>Felisberto Ruco</span></div>
         </header>
         <figure className="article-page-figure">
           <img className="article-featured" src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV anuncia a sua entrada na grelha da TVCABO" />

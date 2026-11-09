@@ -5,6 +5,7 @@ import bnewsLogo from './assets/logos/empresas/bnews.png'
 import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
+import presidenteFoto from './assets/images/presidente/presidente.jpg'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
@@ -124,9 +125,8 @@ export default function App() {
       <section id="presidencia" className="president-section" aria-labelledby="president-title">
         <div className="container president-layout">
           <div className="president-visual">
-            <div className="president-portrait-placeholder" aria-label="Espaço reservado para fotografia oficial do Presidente">
-              <span className="president-monogram" aria-hidden="true">SPM</span>
-              <span className="president-photo-note">FOTOGRAFIA INSTITUCIONAL</span>
+            <div className="president-portrait">
+              <img src={presidenteFoto} alt="Salvador Pedro Maiaze, Presidente do Grupo Mbewu" loading="lazy" decoding="async"/>
             </div>
           </div>
           <div className="president-copy">

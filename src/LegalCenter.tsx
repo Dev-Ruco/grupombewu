@@ -28,9 +28,10 @@ function hasSavedPreference() {
   }
 }
 
-export function CookieNotice({ onNavigate }: { onNavigate: (page: LegalPage) => void }) {
+export function CookieNotice({ onNavigate, openRequest }: { onNavigate: (page: LegalPage) => void, openRequest: number }) {
   const [showBanner, setShowBanner] = useState(() => !hasSavedPreference())
   const [showPreferences, setShowPreferences] = useState(false)
+  useEffect(() => { if (openRequest > 0) setShowPreferences(true) }, [openRequest])
 
   const savePreferences = () => {
     saveNecessaryPreference()
@@ -84,8 +85,6 @@ export function CookieNotice({ onNavigate }: { onNavigate: (page: LegalPage) => 
         <button type="button" className="cookie-btn cookie-btn-primary cookie-save" onClick={savePreferences}>Guardar preferências <Check size={16}/></button>
       </section>
     </div>}
-    <span className="cookie-settings-trigger" aria-hidden="true"/>
-    <button type="button" className="cookie-reopen-button" onClick={() => setShowPreferences(true)} aria-label="Gerir preferências de privacidade" title="Gerir preferências de privacidade"><Cookie size={17}/></button>
   </>
 }
 

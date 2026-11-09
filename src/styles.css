@@ -419,3 +419,50 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
   .article-page-content blockquote{margin:30px 0 32px;padding:19px 17px;font-size:17px;line-height:1.68}
   .article-page-bottom{width:calc(100% - 40px);margin-top:40px}
 }
+
+/* Alinhamento da fotografia com a coluna de leitura e cartões relacionados. */
+.article-page-figure{
+  width:min(720px,calc(100% - 48px));
+  margin:0 auto 42px;
+}
+.article-page-figure .article-featured{
+  width:100%;aspect-ratio:16/10;
+  object-fit:cover;object-position:center;
+}
+.article-page-figure figcaption{font-size:12px;line-height:1.6}
+.article-related{
+  width:min(960px,calc(100% - 48px));
+  margin:74px auto 0;
+  padding-top:38px;
+  border-top:1px solid #dcd9d2;
+}
+.article-related-heading{margin-bottom:29px}
+.article-related-heading h2{
+  font:800 clamp(28px,3.5vw,39px)/1.18 var(--font-display);
+  letter-spacing:-.045em;margin:12px 0;
+  color:#22292d;
+}
+.article-related-heading p{font-size:14px;color:#6e7576;line-height:1.65;margin:0}
+.article-related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.related-card{min-width:0;background:#f4f2ed;border:1px solid #e1ded7;overflow:hidden}
+.related-card-visual{
+  display:flex;align-items:center;justify-content:center;position:relative;
+  min-height:190px;background:linear-gradient(140deg,#2e363c,#171d22);
+  color:#c9bca9;
+}
+.related-card-visual span{position:absolute;bottom:17px;left:20px;font:700 10px/1.3 var(--font-display);letter-spacing:.15em;color:#d8d3cb}
+.related-card-copy{padding:25px 27px 28px}
+.related-card-copy>span{font:750 10px/1.4 var(--font-display);letter-spacing:.13em;color:#8e7d69}
+.related-card-copy h3{font:750 clamp(19px,2vw,23px)/1.3 var(--font-display);letter-spacing:-.03em;color:#232a2e;margin:11px 0 12px}
+.related-card-copy p{font:400 13px/1.65 var(--font-body);color:#757b7b;margin:0}
+@media(max-width:650px){
+ .article-page-figure{width:calc(100% - 40px);margin:0 auto 29px}
+ .article-page-figure .article-featured{aspect-ratio:4/3}
+ .article-page-figure figcaption{padding:0;font-size:11px}
+ .article-related{width:calc(100% - 40px);margin-top:52px;padding-top:30px}
+ .article-related-heading h2{font-size:29px}
+ .article-related-grid{grid-template-columns:1fr;gap:15px}
+ .related-card-visual{min-height:145px}
+ .related-card-copy{padding:20px 22px 23px}
+ .related-card-copy h3{font-size:20px}
+}

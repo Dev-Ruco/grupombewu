@@ -83,8 +83,11 @@ export default function App() {
     return () => window.removeEventListener('scroll', fn)
   },[])
   useEffect(() => {
+    // Cada vista monta elementos diferentes. Reobservar ao alternar entre notícia e página inicial
+    // impede que a classe de animação deixe secções invisíveis.
     const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.documentElement.classList.remove('motion-ready')
     if (reducedMotion || !('IntersectionObserver' in window)) {
       targets.forEach(el => el.classList.add('is-visible'))
       return
@@ -94,14 +97,25 @@ export default function App() {
         if (entry.isIntersecting) entry.target.classList.add('is-visible')
         else entry.target.classList.remove('is-visible')
       })
-    }, {threshold: .12, rootMargin: '0px 0px -28px 0px'})
+    }, {threshold: .08, rootMargin: '0px 0px 35px 0px'})
     targets.forEach(el => observer.observe(el))
     document.documentElement.classList.add('motion-ready')
     return () => {
-      observer.disconnect()
       document.documentElement.classList.remove('motion-ready')
+      observer.disconnect()
+      targets.forEach(el => el.classList.add('is-visible'))
     }
-  },[])
+  }, [articleOpen])
+  useEffect(() => {
+    if (articleOpen) return
+    const hash = window.location.hash
+    if (!hash || hash === '#artigo-btv-tvcabo') return
+    const id = decodeURIComponent(hash.slice(1))
+    const raf = window.requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({behavior:'instant'})
+    })
+    return () => window.cancelAnimationFrame(raf)
+  }, [articleOpen])
   useEffect(() => {
     const syncLocation = () => setArticleOpen(window.location.hash === '#artigo-btv-tvcabo')
     window.addEventListener('popstate', syncLocation)

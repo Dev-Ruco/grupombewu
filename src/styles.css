@@ -54,3 +54,13 @@
 .president-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%}
 @media(max-width:800px){.president-portrait{max-width:420px;max-height:430px;aspect-ratio:4 / 4.4}}
 @media(max-width:480px){.president-portrait{max-height:400px}}
+
+/* Contactos institucionais confirmados */
+.contact-details{display:flex;flex-direction:column;gap:19px;font-style:normal;margin-top:26px}
+.contact-detail{display:flex;align-items:flex-start;gap:15px;line-height:1.65;font-size:15px;font-weight:600;color:#22272b;max-width:510px}
+.contact-detail svg{flex-shrink:0;margin-top:3px;color:#5b5b58}
+a.contact-detail:hover{color:#5e5145;text-decoration:underline;text-underline-offset:4px}
+.footer-grid .footer-line{align-items:flex-start;line-height:1.6;overflow-wrap:anywhere}
+.footer-grid .footer-line svg{flex-shrink:0;margin-top:2px}
+.footer-grid a.footer-line:hover{color:#fff}
+@media(max-width:480px){.contact-details{gap:17px}.contact-detail{font-size:14px}}

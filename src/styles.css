@@ -263,3 +263,24 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
   }
   .company-card .company-logo-art,.president-portrait img{transition:none!important}
 }
+
+/* Integração dos logótipos no painel grafite.
+   O fundo opaco do suporte torna o modo Screen previsível,
+   mesmo quando os cartões têm animações de opacidade/transformação. */
+.companies-section{--company-panel-bg:#1b1f23;background:var(--company-panel-bg)}
+.company-logo-stage{
+  background:var(--company-panel-bg);
+  isolation:isolate;
+  border:0;
+  border-radius:0;
+}
+.company-logo-stage .company-logo-art{
+  mix-blend-mode:screen;
+  filter:grayscale(1) brightness(1.2) contrast(1.6);
+}
+.company-bnews .company-logo-stage .company-logo-art{
+  filter:grayscale(1) brightness(1.4) contrast(1.7);
+}
+.company-card:hover .company-logo-stage .company-logo-art{
+  filter:grayscale(.15) brightness(1.5) contrast(1.6);
+}

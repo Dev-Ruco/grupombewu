@@ -6,7 +6,6 @@ import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
-import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
@@ -54,7 +53,7 @@ function Logo({footer=false}:{footer?:boolean}) {
 }
 function CompanyCard({company}:{company:typeof companies[number]}) {
   const website = 'url' in company ? company.url : undefined
-  return <article className={'company-card company-' + company.id}>
+  return <article data-reveal className={'company-card company-' + company.id}>
     <div className="company-logo-stage">
       <img className="company-logo-art" src={company.logo} alt={`Logótipo da ${company.name}`} loading="lazy" decoding="async"/>
     </div>
@@ -75,6 +74,26 @@ export default function App() {
     window.addEventListener('scroll', fn, {passive:true}); fn()
     return () => window.removeEventListener('scroll', fn)
   },[])
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible')
+        else entry.target.classList.remove('is-visible')
+      })
+    }, {threshold: .12, rootMargin: '0px 0px -28px 0px'})
+    targets.forEach(el => observer.observe(el))
+    document.documentElement.classList.add('motion-ready')
+    return () => {
+      observer.disconnect()
+      document.documentElement.classList.remove('motion-ready')
+    }
+  },[])
   const closeMenu = () => setMenuOpen(false)
   return <>
     <header className={'site-header '+(scrolled?'is-scrolled':'')}>
@@ -91,20 +110,15 @@ export default function App() {
         <div className="hero-ambient hero-ambient-one" aria-hidden="true"/>
         <div className="hero-ambient hero-ambient-two" aria-hidden="true"/>
         <div className="hero-identity-lines" aria-hidden="true"/>
-        <div className="container hero-identity-grid">
+        <div className="container hero-identity-grid hero-identity-grid-solo">
           <div className="hero-identity-copy">
             <span className="hero-identity-eyebrow">GRUPO EMPRESARIAL MOÇAMBICANO</span>
-            <h1>Um grupo.<br/><span>Diferentes sectores.</span><br/>Uma visão de futuro.</h1>
+            <h1 className="hero-animated-headline"><span className="hero-title-line">Um grupo.</span><span className="hero-title-line hero-title-accent">Diferentes sectores.</span><span className="hero-title-line">Uma visão de futuro.</span></h1>
             <p>Reunimos marcas com identidade própria em diferentes sectores de actividade, unidos pelo compromisso de criar valor e desenvolver novas oportunidades.</p>
             <div className="hero-actions">
               <a className="btn btn-light" href="#sobre">Conheça o Grupo <ArrowUpRight size={18}/></a>
               <a className="btn btn-outline" href="#empresas">As nossas empresas <ArrowRight size={18}/></a>
             </div>
-          </div>
-          <div className="hero-identity-art">
-            <div className="hero-identity-halo" aria-hidden="true"/>
-            <img src={grupoMbewuLogo} alt="Logótipo oficial do Grupo Mbewu" className="hero-official-logo" fetchPriority="high"/>
-            <span className="hero-identity-art-note">IDENTIDADE · VISÃO · CRESCIMENTO</span>
           </div>
         </div>
         <div className="hero-identity-bottom">
@@ -116,30 +130,30 @@ export default function App() {
         </div>
       </section>
       <section id="sobre" className="about section-white"><div className="container about-grid">
-        <div><span className="eyebrow dark-eyebrow"><span className="tiny-line"/> QUEM SOMOS</span><h2>Diferentes sectores.<br/><em>Uma visão comum.</em></h2></div>
-        <div className="about-right"><p className="about-lead">O Grupo Mbewu reúne empresas com identidades próprias, presentes em diferentes áreas da economia moçambicana.</p><p>Da comunicação à mobilidade, da música à segurança e à logística, apostamos no desenvolvimento de actividades que respondem às necessidades de pessoas, empresas e instituições.</p><a className="text-link" href="#empresas">Descubra as nossas empresas <ArrowUpRight size={19}/></a></div>
+        <div data-reveal><span className="eyebrow dark-eyebrow"><span className="tiny-line"/> QUEM SOMOS</span><h2>Diferentes sectores.<br/><em>Uma visão comum.</em></h2></div>
+        <div data-reveal className="about-right"><p className="about-lead">O Grupo Mbewu reúne empresas com identidades próprias, presentes em diferentes áreas da economia moçambicana.</p><p>Da comunicação à mobilidade, da música à segurança e à logística, apostamos no desenvolvimento de actividades que respondem às necessidades de pessoas, empresas e instituições.</p><a className="text-link" href="#empresas">Descubra as nossas empresas <ArrowUpRight size={19}/></a></div>
       </div></section>
       <section id="empresas" className="companies-section section-dark"><div className="container">
-        <div className="companies-heading"><span className="eyebrow"><span className="tiny-line"/> GRUPO MBEWU <span className="tiny-line"/></span><h2>Empresas do <em>Grupo.</em></h2><p>Marcas com identidade própria, unidas por uma visão comum.</p></div>
+        <div data-reveal className="companies-heading"><span className="eyebrow"><span className="tiny-line"/> GRUPO MBEWU <span className="tiny-line"/></span><h2>Empresas do <em>Grupo.</em></h2><p>Marcas com identidade própria, unidas por uma visão comum.</p></div>
         <div className="companies-grid">{companies.map(company=><CompanyCard key={company.id} company={company}/>)}</div>
         
       </div></section>
       <section id="actuacao" className="services-section section-white"><div className="container">
-        <div className="center-heading"><span className="eyebrow dark-eyebrow">O QUE FAZEMOS</span><h2>Áreas de <em>actuação.</em></h2><p>Competências em diferentes sectores, reunidas num único grupo empresarial.</p></div>
-        <div className="services-grid">{services.map((service,index)=><article className="service-card" key={service.name}><span className="service-index">0{index+1}</span><service.icon size={34} strokeWidth={1.45}/><h3>{service.name}</h3><p>{service.text}</p></article>)}</div>
+        <div data-reveal className="center-heading"><span className="eyebrow dark-eyebrow">O QUE FAZEMOS</span><h2>Áreas de <em>actuação.</em></h2><p>Competências em diferentes sectores, reunidas num único grupo empresarial.</p></div>
+        <div className="services-grid">{services.map((service,index)=><article data-reveal className="service-card" key={service.name}><span className="service-index">0{index+1}</span><service.icon size={34} strokeWidth={1.45}/><h3>{service.name}</h3><p>{service.text}</p></article>)}</div>
       </div></section>
       <section className="strengths-section section-dark"><div className="container">
-        <div className="section-heading strengths-heading"><div><span className="eyebrow"><span className="tiny-line"/> A NOSSA ABORDAGEM</span><h2>Mais do que empresas.<br/><em>Uma visão de futuro.</em></h2></div><p>Construímos o nosso percurso através da diversidade de competências e de uma aposta na colaboração.</p></div>
-        <div className="strengths-grid">{strengths.map((strength)=><article className="strength-card" key={strength.name}><strength.icon size={30} strokeWidth={1.5}/><h3>{strength.name}</h3><p>{strength.text}</p></article>)}</div>
+        <div data-reveal className="section-heading strengths-heading"><div><span className="eyebrow"><span className="tiny-line"/> A NOSSA ABORDAGEM</span><h2>Mais do que empresas.<br/><em>Uma visão de futuro.</em></h2></div><p>Construímos o nosso percurso através da diversidade de competências e de uma aposta na colaboração.</p></div>
+        <div className="strengths-grid">{strengths.map((strength)=><article data-reveal className="strength-card" key={strength.name}><strength.icon size={30} strokeWidth={1.5}/><h3>{strength.name}</h3><p>{strength.text}</p></article>)}</div>
       </div></section>
       <section id="presidencia" className="president-section" aria-labelledby="president-title">
         <div className="container president-layout">
-          <div className="president-visual">
+          <div data-reveal className="president-visual">
             <div className="president-portrait">
               <img src={presidenteFoto} alt="Salvador Pedro Maiaze, Presidente do Grupo Mbewu" loading="lazy" decoding="async"/>
             </div>
           </div>
-          <div className="president-copy">
+          <div data-reveal className="president-copy">
             <span className="eyebrow dark-eyebrow">LIDERANÇA INSTITUCIONAL</span>
             <span className="president-kicker">Presidente do Grupo Mbewu</span>
             <h2 id="president-title">Salvador Pedro<br/><em>Maiaze.</em></h2>
@@ -148,14 +162,14 @@ export default function App() {
           </div>
         </div>
       </section>
-      <section id="contactos" className="contact-section"><div className="container contact-layout"><div><span className="eyebrow">VAMOS CONVERSAR</span><h2>Novas ideias.<br/><em>Novas oportunidades.</em></h2><p>Quer estabelecer uma parceria ou saber mais sobre o Grupo Mbewu? Estamos disponíveis para conversar.</p><address className="contact-details">
+      <section id="contactos" className="contact-section"><div className="container contact-layout"><div data-reveal><span className="eyebrow">VAMOS CONVERSAR</span><h2>Novas ideias.<br/><em>Novas oportunidades.</em></h2><p>Quer estabelecer uma parceria ou saber mais sobre o Grupo Mbewu? Estamos disponíveis para conversar.</p><address className="contact-details">
   <div className="contact-detail"><MapPin size={20}/><span>Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar<br/>Bairro da Malhangalene<br/>Maputo, Moçambique</span></div>
   <a className="contact-detail" href="mailto:info@grupombewu.co.mz"><Mail size={20}/><span>info@grupombewu.co.mz</span></a>
   <a className="contact-detail" href="tel:+258858000800"><Phone size={20}/><span>+258 85 800 0800</span></a>
-</address></div><div className="contact-symbol"><TreeMark/><span>JUNTOS, CONSTRUÍMOS O FUTURO.</span></div></div></section>
+</address></div><div data-reveal className="contact-symbol"><TreeMark/><span>JUNTOS, CONSTRUÍMOS O FUTURO.</span></div></div></section>
     </main>
     <footer className="footer"><div className="container">
-      <div className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
+      <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Grupo Mbewu. Todos os direitos reservados.</span><span>Desenvolvido com visão de futuro.</span></div>
     </div></footer>
   </>

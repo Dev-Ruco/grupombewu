@@ -6,6 +6,7 @@ import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
+import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
@@ -86,24 +87,33 @@ export default function App() {
       </div>
     </header>
     <main>
-      <section id="inicio" className="hero">
-        <div className="hero-glow" aria-hidden="true"/>
-        <div className="container hero-grid">
-          <div className="hero-copy">
-            <span className="eyebrow hero-eyebrow"><span className="tiny-line"/> UM UNIVERSO DE POSSIBILIDADES</span>
-            <h1>Um grupo.<br/><span>Múltiplas</span><br/>soluções<span className="period">.</span></h1>
-            <p>Um conjunto de marcas moçambicanas que actuam em diferentes sectores, com uma visão comum: criar valor, construir relações e abrir novas oportunidades.</p>
-            <div className="hero-actions"><a className="btn btn-light" href="#sobre">Conheça o Grupo <ArrowUpRight size={18}/></a><a className="btn btn-outline" href="#empresas">Explorar empresas <ArrowRight size={18}/></a></div>
-            <div className="hero-scroll"><ChevronDown size={16}/> DESCUBRA O GRUPO</div>
+      <section id="inicio" className="hero hero-identity">
+        <div className="hero-ambient hero-ambient-one" aria-hidden="true"/>
+        <div className="hero-ambient hero-ambient-two" aria-hidden="true"/>
+        <div className="hero-identity-lines" aria-hidden="true"/>
+        <div className="container hero-identity-grid">
+          <div className="hero-identity-copy">
+            <span className="hero-identity-eyebrow">GRUPO EMPRESARIAL MOÇAMBICANO</span>
+            <h1>Um grupo.<br/><span>Diferentes sectores.</span><br/>Uma visão de futuro.</h1>
+            <p>Reunimos marcas com identidade própria em diferentes sectores de actividade, unidos pelo compromisso de criar valor e desenvolver novas oportunidades.</p>
+            <div className="hero-actions">
+              <a className="btn btn-light" href="#sobre">Conheça o Grupo <ArrowUpRight size={18}/></a>
+              <a className="btn btn-outline" href="#empresas">As nossas empresas <ArrowRight size={18}/></a>
+            </div>
           </div>
-          <div className="hero-visual">
-            <div className="hero-orbit orbit-one"/><div className="hero-orbit orbit-two"/>
-            <div className="hero-emblem"><TreeMark/><div className="hero-emblem-name"><span>GRUPO</span><strong>MBEWU</strong></div></div>
-            <div className="hero-brand-strip"><span>MEDIA</span><i/><span>MOBILIDADE</span><i/><span>SEGURANÇA</span><i/><span>LOGÍSTICA</span></div>
-            <span className="hero-visual-label">VISÃO PARTILHADA · IDENTIDADES ÚNICAS</span>
+          <div className="hero-identity-art">
+            <div className="hero-identity-halo" aria-hidden="true"/>
+            <img src={grupoMbewuLogo} alt="Logótipo oficial do Grupo Mbewu" className="hero-official-logo" fetchPriority="high"/>
+            <span className="hero-identity-art-note">IDENTIDADE · VISÃO · CRESCIMENTO</span>
           </div>
         </div>
-        <div className="hero-bottom-line"/>
+        <div className="hero-identity-bottom">
+          <div className="container hero-identity-bottom-inner">
+            <span>MOÇAMBIQUE</span>
+            <span>MEDIA <i/> MOBILIDADE <i/> SEGURANÇA <i/> LOGÍSTICA <i/> MÚSICA & EVENTOS</span>
+            <a href="#sobre" aria-label="Descer para conhecer o Grupo"><ChevronDown size={19}/></a>
+          </div>
+        </div>
       </section>
       <section id="sobre" className="about section-white"><div className="container about-grid">
         <div><span className="eyebrow dark-eyebrow"><span className="tiny-line"/> QUEM SOMOS</span><h2>Diferentes sectores.<br/><em>Uma visão comum.</em></h2></div>

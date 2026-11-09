@@ -50,13 +50,9 @@ function TreeMark({small = false}:{small?:boolean}) {
 function Logo({footer=false}:{footer?:boolean}) {
   return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início"><TreeMark small/><span className="brand-words"><span>GRUPO</span><strong>MBEWU</strong></span></a>
 }
-function CompanyCard({company, index}:{company:typeof companies[number],index:number}) {
+function CompanyCard({company}:{company:typeof companies[number]}) {
   const website = 'url' in company ? company.url : undefined
   return <article className={'company-card company-' + company.id}>
-    <div className="company-card-head">
-      <span className="company-number">0{index+1} <span>/</span> 06</span>
-      <span className="company-card-head-label">{company.category}</span>
-    </div>
     <div className="company-logo-stage">
       <img className="company-logo-art" src={company.logo} alt={`Logótipo da ${company.name}`} loading="lazy" decoding="async"/>
     </div>
@@ -65,10 +61,7 @@ function CompanyCard({company, index}:{company:typeof companies[number],index:nu
       <p>{company.short}</p>
     </div>
     <div className="company-card-action">
-      {website
-        ? <a href={website} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={17}/></a>
-        : <span className="company-card-sector">Grupo Mbewu</span>}
-      <span className="company-card-action-icon" aria-hidden="true"><ArrowUpRight size={18}/></span>
+      {website && <a href={website} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={15}/></a>}
     </div>
   </article>
 }
@@ -116,8 +109,8 @@ export default function App() {
         <div className="about-right"><p className="about-lead">O Grupo Mbewu reúne empresas com identidades próprias, presentes em diferentes áreas da economia moçambicana.</p><p>Da comunicação à mobilidade, da música à segurança e à logística, apostamos no desenvolvimento de actividades que respondem às necessidades de pessoas, empresas e instituições.</p><a className="text-link" href="#empresas">Descubra as nossas empresas <ArrowUpRight size={19}/></a></div>
       </div></section>
       <section id="empresas" className="companies-section section-dark"><div className="container">
-        <div className="section-heading"><div><span className="eyebrow"><span className="tiny-line"/> O NOSSO ECOSSISTEMA</span><h2>Empresas do <em>Grupo.</em></h2></div><p>Marcas com identidade própria, unidas por uma ambição de crescimento e criação de valor.</p></div>
-        <div className="companies-grid">{companies.map((company,index)=><CompanyCard key={company.id} company={company} index={index}/>)}</div>
+        <div className="companies-heading"><span className="eyebrow"><span className="tiny-line"/> GRUPO MBEWU <span className="tiny-line"/></span><h2>Empresas do <em>Grupo.</em></h2><p>Marcas com identidade própria, unidas por uma visão comum.</p></div>
+        <div className="companies-grid">{companies.map(company=><CompanyCard key={company.id} company={company}/>)}</div>
         
       </div></section>
       <section id="actuacao" className="services-section section-white"><div className="container">

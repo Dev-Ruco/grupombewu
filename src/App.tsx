@@ -69,7 +69,7 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
 export default function App() {
   const [menuOpen,setMenuOpen] = useState(false)
   const [scrolled,setScrolled] = useState(false)
-  const [articleOpen,setArticleOpen] = useState(false)
+  const [articleOpen,setArticleOpen] = useState(() => window.location.hash === '#artigo-btv-tvcabo')
   const newsTrackRef = useRef<HTMLDivElement>(null)
   const moveNews = (direction: number) => {
     const track = newsTrackRef.current
@@ -103,18 +103,24 @@ export default function App() {
     }
   },[])
   useEffect(() => {
-    if (!articleOpen) return
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setArticleOpen(false)
-    }
-    window.addEventListener('keydown', onKeyDown)
+    const syncLocation = () => setArticleOpen(window.location.hash === '#artigo-btv-tvcabo')
+    window.addEventListener('popstate', syncLocation)
+    window.addEventListener('hashchange', syncLocation)
     return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('popstate', syncLocation)
+      window.removeEventListener('hashchange', syncLocation)
     }
-  }, [articleOpen])
+  }, [])
+  const openArticle = () => {
+    window.history.pushState({article:'btv-tvcabo'}, '', '#artigo-btv-tvcabo')
+    setArticleOpen(true)
+    window.scrollTo({top:0,behavior:'instant'})
+  }
+  const closeArticle = () => {
+    window.history.pushState({}, '', '#actualidade')
+    setArticleOpen(false)
+    window.requestAnimationFrame(() => document.getElementById('actualidade')?.scrollIntoView({behavior:'instant'}))
+  }
   const closeMenu = () => setMenuOpen(false)
   return <>
     <header className={'site-header '+(scrolled?'is-scrolled':'')}>
@@ -126,7 +132,7 @@ export default function App() {
         <button type="button" className="menu-toggle" aria-label={menuOpen?'Fechar menu':'Abrir menu'} aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
       </div>
     </header>
-    <main>
+    {!articleOpen ? <main>
       <section id="inicio" className="hero hero-identity">
         <div className="hero-ambient hero-ambient-one" aria-hidden="true"/>
         <div className="hero-ambient hero-ambient-two" aria-hidden="true"/>
@@ -214,25 +220,31 @@ export default function App() {
                 {item.excerpt ? <p className="news-card-excerpt">{item.excerpt}</p> : <span className="news-card-pending">Conteúdo a adicionar</span>}
                 {item.url && <span className="news-card-read">Ler notícia completa <ArrowUpRight size={17}/></span>}
               </div>
-              {item.url && <button className="news-card-hitarea" type="button" onClick={() => setArticleOpen(true)} aria-label={'Ler artigo completo: ' + item.heading}/>}
+              {item.url && <button className="news-card-hitarea" type="button" onClick={openArticle} aria-label={'Ler artigo completo: ' + item.heading}/>}
             </article>)}
           </div>
           <p className="news-disclaimer">Os restantes cartões serão actualizados à medida que forem disponibilizados novos artigos e fotografias.</p>
         </div>
       </section>
-    </main>
-    {articleOpen && <div className="article-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setArticleOpen(false) }}>
-      <section className="article-dialog" role="dialog" aria-modal="true" aria-labelledby="article-full-title" tabIndex={-1}>
-        <header className="article-dialog-top">
-          <span>GRUPO MBEWU <span aria-hidden="true">/</span> ACTUALIDADE</span>
-          <button className="article-close" type="button" aria-label="Fechar notícia" autoFocus onClick={() => setArticleOpen(false)}><X size={22}/></button>
+    </main> : <main className="article-page" id="artigo-btv" aria-labelledby="article-full-title">
+      <div className="article-page-top">
+        <div className="container article-page-nav">
+          <button type="button" className="article-back" onClick={closeArticle}><ArrowRight size={19} className="article-back-icon"/> Voltar às notícias</button>
+          <span className="article-breadcrumb">GRUPO MBEWU <span>/</span> ACTUALIDADE</span>
+        </div>
+      </div>
+      <article className="article-page-article">
+        <header className="article-page-heading">
+          <span className="article-category">BTV <span className="article-category-dot">·</span> EXPANSÃO</span>
+          <h1 id="article-full-title">BTV reforça presença nacional com entrada na TVCABO</h1>
+          <p className="article-page-standfirst">O canal alargou a sua distribuição ao integrar a grelha da TVCABO na posição 323, aproximando a programação de mais famílias moçambicanas.</p>
+          <div className="article-meta"><span>23 de Setembro de 2026</span><span className="article-meta-divider" aria-hidden="true"/> <span>Texto adaptado de reportagem da BNEWS · Délio Timane</span></div>
         </header>
-        <div className="article-dialog-scroll">
-          <div className="article-content">
-            <span className="article-category">BTV · EXPANSÃO</span>
-            <h2 id="article-full-title">BTV reforça presença nacional com entrada na TVCABO</h2>
-            <div className="article-meta"><span>23 de Setembro de 2026</span><span>Fonte: BNEWS · Délio Timane</span></div>
-            <img className="article-featured" src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV anuncia a sua entrada na grelha da TVCABO" />
+        <figure className="article-page-figure">
+          <img className="article-featured" src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV anuncia a sua entrada na grelha da TVCABO" />
+          <figcaption>Expansão da BTV à televisão por subscrição, através da TVCABO.</figcaption>
+        </figure>
+        <div className="article-content article-page-content">
             <p className="article-lead">A BTV passou a integrar a grelha da TVCABO em 1 de Outubro de 2026, na posição 323, ampliando a distribuição dos seus conteúdos e reforçando a presença da produção televisiva moçambicana.</p>
             <p>O alargamento da emissão à televisão por subscrição representa uma nova fase no percurso da BTV. Até então, a estação chegava ao público essencialmente através das plataformas digitais, onde mantém uma programação regular desde Abril, dedicada à informação, cultura, entretenimento e temas da realidade nacional.</p>
             <p>Para Salvador Maiaze, Presidente do Conselho de Administração da BTV, a integração na TVCABO concretiza um objectivo preparado ao longo dos últimos meses e permite aproximar o canal de mais famílias moçambicanas.</p>
@@ -243,10 +255,11 @@ export default function App() {
             <blockquote>"A entrada do canal na nossa grelha programática reforça aquilo que tem sido o nosso trajecto ao longo dos anos, especialmente nos últimos anos: dar espaço ao conteúdo nacional e à produção local", declarou Humberto Barros.</blockquote>
             <p>A parceria alarga os meios de acesso à informação e ao entretenimento produzidos em Moçambique, ao mesmo tempo que fortalece a presença da BTV no mercado televisivo nacional.</p>
             <div className="article-source"><span>Texto adaptado para a actualidade institucional do Grupo Mbewu.</span><a href="https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o" target="_blank" rel="noopener noreferrer">Consultar reportagem original na BNEWS <ArrowUpRight size={17}/></a></div>
-          </div>
+
         </div>
-      </section>
-    </div>}
+        <div className="article-page-bottom"><button className="article-back" type="button" onClick={closeArticle}><ArrowRight size={19} className="article-back-icon"/> Voltar aos acontecimentos</button></div>
+      </article>
+    </main>}
     <footer id="contactos" className="footer"><div className="container">
       <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a><a href="#actualidade">Actualidade</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Grupo Mbewu. Todos os direitos reservados.</span><span>Desenvolvido com visão de futuro.</span></div>

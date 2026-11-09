@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
+import btvLogo from './assets/logos/empresas/btv.png'
+import mlcLogo from './assets/logos/empresas/maputo-luxury-cars.png'
+import bnewsLogo from './assets/logos/empresas/bnews.png'
+import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
+import securityLogo from './assets/logos/empresas/24-7-security.png'
+import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
-  { id: 'btv', name: 'BTV', category: 'MEDIA & TELEVISÃO', short: 'Televisão, conteúdos audiovisuais, informação e entretenimento.', logo: 'BTV', accent: 'pink' },
-  { id: 'mlc', name: 'Maputo Luxury Cars', category: 'MOBILIDADE PREMIUM', short: 'Serviços de transporte com motorista e soluções de mobilidade premium.', logo: 'MLC', accent: 'copper', url: 'https://maputoluxurycars.co.mz' },
-  { id: 'bnews', name: 'BNEWS', category: 'INFORMAÇÃO', short: 'Notícias, actualidade e conteúdos informativos.', logo: 'BNEWS', accent: 'red' },
-  { id: 'bawito', name: 'Bawito Music & Serviços', category: 'MÚSICA & EVENTOS', short: 'Gestão artística, produção e serviços ligados ao entretenimento.', logo: 'BAWITO', accent: 'blue' },
-  { id: 'security', name: '24/7 Security', category: 'SEGURANÇA', short: 'Serviços de segurança e protecção de pessoas e património.', logo: '24/7', accent: 'scarlet' },
-  { id: 'vuka', name: 'Vuka Logística & Serviços', category: 'LOGÍSTICA', short: 'Soluções de logística, transporte e serviços operacionais.', logo: 'VUKA', accent: 'royal' },
+  { id: 'btv', name: 'BTV', category: 'MEDIA & TELEVISÃO', short: 'Televisão, conteúdos audiovisuais, informação e entretenimento.', logo: btvLogo, accent: 'pink' },
+  { id: 'mlc', name: 'Maputo Luxury Cars', category: 'MOBILIDADE PREMIUM', short: 'Serviços de transporte com motorista e soluções de mobilidade premium.', logo: mlcLogo, accent: 'copper', url: 'https://maputoluxurycars.co.mz' },
+  { id: 'bnews', name: 'BNEWS', category: 'INFORMAÇÃO', short: 'Notícias, actualidade e conteúdos informativos.', logo: bnewsLogo, accent: 'red' },
+  { id: 'bawito', name: 'Bawito Music & Serviços', category: 'MÚSICA & EVENTOS', short: 'Gestão artística, produção e serviços ligados ao entretenimento.', logo: bawitoLogo, accent: 'blue' },
+  { id: 'security', name: '24/7 Security', category: 'SEGURANÇA', short: 'Serviços de segurança e protecção de pessoas e património.', logo: securityLogo, accent: 'scarlet' },
+  { id: 'vuka', name: 'Vuka Logística & Serviços', category: 'LOGÍSTICA', short: 'Soluções de logística, transporte e serviços operacionais.', logo: vukaLogo, accent: 'royal' },
 ] as const
 
 const services = [
@@ -47,7 +53,7 @@ function Logo({footer=false}:{footer?:boolean}) {
 function CompanyCard({company, index}:{company:typeof companies[number],index:number}) {
   return <article className={'company-card company-' + company.accent} style={{animationDelay: (index*70) + 'ms'}}>
     <div className="company-top"><span className="company-number">0{index+1} / 06</span><ArrowUpRight size={19} aria-hidden="true"/></div>
-    <div className={'company-logo logo-' + company.accent}>{company.logo}</div>
+    <div className="company-logo-frame"><img className="company-logo-image" src={company.logo} alt={`Logótipo ${company.name}`} loading="lazy" decoding="async"/></div>
     <div className="company-bottom"><span className="eyebrow company-category">{company.category}</span><h3>{company.name}</h3><p>{company.short}</p>
     {'url' in company ? <a href={company.url} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={16}/></a> : <span className="company-link muted">Conheça a empresa <ArrowRight size={16}/></span>}
     </div>
@@ -99,7 +105,7 @@ export default function App() {
       <section id="empresas" className="companies-section section-dark"><div className="container">
         <div className="section-heading"><div><span className="eyebrow"><span className="tiny-line"/> O NOSSO ECOSSISTEMA</span><h2>Empresas do <em>Grupo.</em></h2></div><p>Marcas com identidade própria, unidas por uma ambição de crescimento e criação de valor.</p></div>
         <div className="companies-grid">{companies.map((company,index)=><CompanyCard key={company.id} company={company} index={index}/>)}</div>
-        <p className="company-note">As marcas e descrições serão actualizadas com os respectivos materiais institucionais oficiais.</p>
+        <p className="company-note">Logótipos monocromáticos para uma apresentação visual coerente das empresas do Grupo.</p>
       </div></section>
       <section id="actuacao" className="services-section section-white"><div className="container">
         <div className="center-heading"><span className="eyebrow dark-eyebrow">O QUE FAZEMOS</span><h2>Áreas de <em>actuação.</em></h2><p>Competências em diferentes sectores, reunidas num único grupo empresarial.</p></div>

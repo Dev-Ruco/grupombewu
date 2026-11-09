@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import btvLogo from './assets/logos/empresas/btv.png'
 import mlcLogo from './assets/logos/empresas/maputo-luxury-cars.png'
-import bnewsLogo from './assets/logos/empresas/bnews-oficial.svg'
+import bnewsLogo from './assets/logos/empresas/bnews.png'
 import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
@@ -51,11 +51,24 @@ function Logo({footer=false}:{footer?:boolean}) {
   return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início"><TreeMark small/><span className="brand-words"><span>GRUPO</span><strong>MBEWU</strong></span></a>
 }
 function CompanyCard({company, index}:{company:typeof companies[number],index:number}) {
-  return <article className={'company-card company-' + company.accent} style={{animationDelay: (index*70) + 'ms'}}>
-    <div className="company-top"><span className="company-number">0{index+1} / 06</span><ArrowUpRight size={19} aria-hidden="true"/></div>
-    <div className={`company-logo-frame ${company.id === "bnews" ? "company-logo-frame-bnews" : ""}`}><img className={`company-logo-image ${company.id === "bnews" ? "company-logo-image-bnews" : ""}`} src={company.logo} alt={`Logótipo ${company.name}`} loading="lazy" decoding="async"/></div>
-    <div className="company-bottom"><span className="eyebrow company-category">{company.category}</span><h3>{company.name}</h3><p>{company.short}</p>
-    {'url' in company ? <a href={company.url} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={16}/></a> : <span className="company-link muted">Conheça a empresa <ArrowRight size={16}/></span>}
+  const website = 'url' in company ? company.url : undefined
+  return <article className={'company-card company-' + company.id}>
+    <div className="company-card-head">
+      <span className="company-number">0{index+1} <span>/</span> 06</span>
+      <span className="company-card-head-label">{company.category}</span>
+    </div>
+    <div className="company-logo-stage">
+      <img className="company-logo-art" src={company.logo} alt={`Logótipo da ${company.name}`} loading="lazy" decoding="async"/>
+    </div>
+    <div className="company-card-content">
+      <h3>{company.name}</h3>
+      <p>{company.short}</p>
+    </div>
+    <div className="company-card-action">
+      {website
+        ? <a href={website} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={17}/></a>
+        : <span className="company-card-sector">Grupo Mbewu</span>}
+      <span className="company-card-action-icon" aria-hidden="true"><ArrowUpRight size={18}/></span>
     </div>
   </article>
 }
@@ -105,7 +118,7 @@ export default function App() {
       <section id="empresas" className="companies-section section-dark"><div className="container">
         <div className="section-heading"><div><span className="eyebrow"><span className="tiny-line"/> O NOSSO ECOSSISTEMA</span><h2>Empresas do <em>Grupo.</em></h2></div><p>Marcas com identidade própria, unidas por uma ambição de crescimento e criação de valor.</p></div>
         <div className="companies-grid">{companies.map((company,index)=><CompanyCard key={company.id} company={company} index={index}/>)}</div>
-        <p className="company-note">Logótipos monocromáticos para uma apresentação visual coerente das empresas do Grupo.</p>
+        
       </div></section>
       <section id="actuacao" className="services-section section-white"><div className="container">
         <div className="center-heading"><span className="eyebrow dark-eyebrow">O QUE FAZEMOS</span><h2>Áreas de <em>actuação.</em></h2><p>Competências em diferentes sectores, reunidas num único grupo empresarial.</p></div>

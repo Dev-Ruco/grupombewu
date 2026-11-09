@@ -184,23 +184,25 @@ export default function App() {
           </div>
           <div className="news-track" ref={newsTrackRef} role="region" aria-label="Carrossel de acontecimentos" tabIndex={0}>
             {[
-              {label:'NOTÍCIAS',heading:'Espaço reservado para notícias do Grupo',number:'01',icon:Tv},
-              {label:'PROJECTOS',heading:'Espaço reservado para projectos e iniciativas',number:'02',icon:Layers3},
-              {label:'ACTIVIDADES',heading:'Espaço reservado para eventos e realizações',number:'03',icon:Handshake},
-            ].map(item => <article className="news-card" key={item.number}>
+              {label:'BTV · EXPANSÃO',heading:'BTV reforça presença nacional com entrada na TVCABO',number:'01',icon:Tv,date:'23 de Setembro de 2026',excerpt:'Desde 1 de Outubro, o canal integra a grelha da TVCABO na posição 323, alargando o acesso à informação, cultura e entretenimento produzidos em Moçambique.',image:'https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp',url:'https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o'},
+              {label:'PROJECTOS',heading:'Espaço reservado para projectos e iniciativas',number:'02',icon:Layers3,date:null,excerpt:null,image:null,url:null},
+              {label:'ACTIVIDADES',heading:'Espaço reservado para eventos e realizações',number:'03',icon:Handshake,date:null,excerpt:null,image:null,url:null},
+            ].map(item => <article className={'news-card' + (item.url ? ' news-card-published' : '')} key={item.number}>
               <div className="news-card-media">
+                {item.image ? <img className="news-card-image" src={item.image} alt="Anúncio da chegada da BTV à grelha da TVCABO" loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
                 <span className="news-card-number">{item.number} / 03</span>
-                <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>
-                <span className="news-card-media-note">IMAGEM DO ARTIGO</span>
+                {!item.image && <span className="news-card-media-note">IMAGEM DO ARTIGO</span>}
               </div>
               <div className="news-card-body">
                 <span className="news-card-category">{item.label}</span>
+                {item.date && <span className="news-card-date">{item.date}</span>}
                 <h3>{item.heading}</h3>
-                <span className="news-card-pending">Conteúdo a adicionar</span>
+                {item.excerpt ? <p className="news-card-excerpt">{item.excerpt}</p> : <span className="news-card-pending">Conteúdo a adicionar</span>}
+                {item.url && <a className="news-card-read" href={item.url} target="_blank" rel="noopener noreferrer">Ler notícia completa <ArrowUpRight size={17}/></a>}
               </div>
             </article>)}
           </div>
-          <p className="news-disclaimer">Os cartões são espaços de preparação. As notícias e fotografias serão publicadas depois de fornecidas e confirmadas.</p>
+          <p className="news-disclaimer">Os restantes cartões serão actualizados à medida que forem disponibilizados novos artigos e fotografias.</p>
         </div>
       </section>
     </main>

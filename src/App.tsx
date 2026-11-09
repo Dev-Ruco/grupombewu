@@ -229,8 +229,8 @@ export default function App() {
           <div className="news-track" ref={newsTrackRef} role="region" aria-label="Carrossel de acontecimentos" tabIndex={0}>
             {[
               {label:'BTV · EXPANSÃO',heading:'BTV reforça presença nacional com entrada na TVCABO',number:'01',icon:Tv,date:'23 de Setembro de 2026',excerpt:'Desde 1 de Outubro, o canal integra a grelha da TVCABO na posição 323, alargando o acesso à informação, cultura e entretenimento produzidos em Moçambique.',image:'https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp',url:'https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o'},
-              {label:'VUKA LOGÍSTICA · INTERNACIONALIZAÇÃO',heading:'Salvador Maiaze integra delegação empresarial da CTA em missão aos Estados Unidos da América',number:'02',icon:Truck,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial orientada para novas oportunidades de cooperação económica internacional.',image:salvadorMissaoFoto,url:'#artigo-salvador-maiaze-cta'},
-              {label:'VUKA LOGÍSTICA · COOPERAÇÃO',heading:'Salvador Maiaze participa no Fórum Económico Portugal–Moçambique',number:'03',icon:Handshake,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou no fórum realizado no Porto, dedicado à cooperação e às oportunidades empresariais entre os dois países.',image:forumPortugalFoto,url:'#artigo-salvador-maiaze-forum-portugal'},
+              {label:'VUKA LOGÍSTICA · INTERNACIONALIZAÇÃO',heading:'Vuka Logística Reforça Presença Internacional em Missão Empresarial da CTA aos EUA',number:'02',icon:Truck,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial orientada para novas oportunidades de cooperação económica internacional.',image:salvadorMissaoFoto,url:'#artigo-salvador-maiaze-cta'},
+              {label:'VUKA LOGÍSTICA · COOPERAÇÃO',heading:'Portugal–Moçambique: Vuka Logística Explora Perspectivas de Cooperação Empresarial',number:'03',icon:Handshake,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou no fórum realizado no Porto, dedicado à cooperação e às oportunidades empresariais entre os dois países.',image:forumPortugalFoto,url:'#artigo-salvador-maiaze-forum-portugal'},
             ].map(item => <article className={'news-card' + (item.url ? ' news-card-published' : '')} key={item.number}>
               <div className="news-card-media">
                 {item.image ? <img className="news-card-image" src={item.image} alt={item.number === '03' ? 'Intervenção no Fórum Económico Portugal–Moçambique' : item.number === '02' ? 'Delegação empresarial moçambicana nos Estados Unidos da América' : 'Anúncio da chegada da BTV à grelha da TVCABO'} loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
@@ -262,7 +262,7 @@ export default function App() {
         <div className="article-shell">
           <header className="article-page-heading">
             <span className="article-category">VUKA LOGÍSTICA <span className="article-category-dot">·</span> COOPERAÇÃO INTERNACIONAL</span>
-            <h1 id="article-full-title">Salvador Maiaze Participa no Fórum Económico Portugal–Moçambique e Destaca Oportunidades de Cooperação Empresarial</h1>
+            <h1 id="article-full-title">Portugal–Moçambique: Vuka Logística Explora Perspectivas de Cooperação Empresarial</h1>
             <p className="article-page-standfirst">O empresário participou no encontro realizado no Porto, dedicado ao reforço das relações empresariais e à identificação de oportunidades de investimento entre Moçambique e Portugal.</p>
             <div className="article-meta"><span>Vuka Logística &amp; Serviços</span><span className="article-meta-divider" aria-hidden="true"/><span>Felisberto Ruco</span></div>
           </header>
@@ -296,7 +296,7 @@ export default function App() {
             </button>
             <button className="related-card related-card-link" type="button" onClick={() => openArticle('vuka')}>
               <div className="related-card-visual related-card-photo"><img src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana" loading="lazy"/><span>VUKA LOGÍSTICA · CTA</span></div>
-              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze integra delegação empresarial da CTA aos Estados Unidos</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Vuka Logística Reforça Presença Internacional em Missão Empresarial da CTA aos EUA</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
           </div>
         </aside>
@@ -306,7 +306,7 @@ export default function App() {
         <div className="article-shell">
           <header className="article-page-heading">
             <span className="article-category">VUKA LOGÍSTICA <span className="article-category-dot">·</span> COOPERAÇÃO INTERNACIONAL</span>
-            <h1 id="article-full-title">Salvador Maiaze Integra Delegação Empresarial da CTA em Missão aos Estados Unidos da América</h1>
+            <h1 id="article-full-title">Vuka Logística Reforça Presença Internacional em Missão Empresarial da CTA aos EUA</h1>
             <p className="article-page-standfirst">Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial da CTA, dedicada ao diálogo, à partilha de experiências e à identificação de oportunidades de cooperação.</p>
             <div className="article-meta"><span>Vuka Logística & Serviços</span><span className="article-meta-divider" aria-hidden="true"/><span>Felisberto Ruco</span></div>
           </header>
@@ -344,7 +344,7 @@ export default function App() {
             </button>
             <button className="related-card related-card-link" type="button" onClick={() => openArticle('forum')}>
               <div className="related-card-visual related-card-photo"><img src={forumPortugalFoto} alt="Fórum Económico Portugal–Moçambique" loading="lazy"/><span>PORTUGAL · MOÇAMBIQUE</span></div>
-              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze participa no Fórum Económico Portugal–Moçambique</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Portugal–Moçambique: Vuka Logística Explora Perspectivas de Cooperação Empresarial</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
           </div>
         </aside>
@@ -384,11 +384,11 @@ export default function App() {
           <div className="article-related-grid">
             <button className="related-card related-card-link" type="button" onClick={() => openArticle('vuka')}>
               <div className="related-card-visual related-card-photo"><img src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana" loading="lazy"/><span>VUKA LOGÍSTICA · CTA</span></div>
-              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze integra delegação empresarial da CTA aos Estados Unidos</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Vuka Logística Reforça Presença Internacional em Missão Empresarial da CTA aos EUA</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
             <button className="related-card related-card-link" type="button" onClick={() => openArticle('forum')}>
               <div className="related-card-visual related-card-photo"><img src={forumPortugalFoto} alt="Fórum Económico Portugal–Moçambique" loading="lazy"/><span>PORTUGAL · MOÇAMBIQUE</span></div>
-              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze participa no Fórum Económico Portugal–Moçambique</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Portugal–Moçambique: Vuka Logística Explora Perspectivas de Cooperação Empresarial</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
           </div>
         </aside>

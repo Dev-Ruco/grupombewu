@@ -529,3 +529,30 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
 @media(prefers-reduced-motion:reduce){
   .related-card-link,.related-card-photo img{transition:none!important}
 }
+
+/* Logótipos das empresas: o recorte por luminância remove o preto incorporado
+   nos PNG originais e deixa o grafite do painel visível através dos pixels vazios.
+   Não usar screen nem máscaras radiais: essas técnicas deixam rectângulos perceptíveis. */
+.companies-section .company-logo-stage{
+  background:transparent;
+  isolation:auto;
+  border:0;
+  box-shadow:none;
+}
+.companies-section svg.company-logo-transparent{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  object-fit:contain;
+  mix-blend-mode:normal!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:none!important;
+}
+.companies-section .company-card:hover svg.company-logo-transparent{
+  filter:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .companies-section svg.company-logo-transparent{transition:none!important}
+}

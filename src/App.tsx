@@ -7,6 +7,7 @@ import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
 import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
+import forumPortugalFoto from './assets/images/Presidente-da-República-discursa-no-Fórum-Económico-Portugal-Moçambique-na-Cidade-do-Porto10-e1765356290135.jpeg'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
@@ -70,12 +71,13 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
 export default function App() {
   const [menuOpen,setMenuOpen] = useState(false)
   const [scrolled,setScrolled] = useState(false)
-  const getArticleFromHash = (): 'btv' | 'vuka' | null => {
+  const getArticleFromHash = (): 'btv' | 'vuka' | 'forum' | null => {
     if (window.location.hash === '#artigo-btv-tvcabo') return 'btv'
     if (window.location.hash === '#artigo-salvador-maiaze-cta') return 'vuka'
+    if (window.location.hash === '#artigo-salvador-maiaze-forum-portugal') return 'forum'
     return null
   }
-  const [activeArticle,setActiveArticle] = useState<'btv' | 'vuka' | null>(getArticleFromHash)
+  const [activeArticle,setActiveArticle] = useState<'btv' | 'vuka' | 'forum' | null>(getArticleFromHash)
   const articleOpen = activeArticle !== null
   const newsTrackRef = useRef<HTMLDivElement>(null)
   const moveNews = (direction: number) => {
@@ -132,8 +134,8 @@ export default function App() {
       window.removeEventListener('hashchange', syncLocation)
     }
   }, [])
-  const openArticle = (article: 'btv' | 'vuka') => {
-    const hash = article === 'vuka' ? '#artigo-salvador-maiaze-cta' : '#artigo-btv-tvcabo'
+  const openArticle = (article: 'btv' | 'vuka' | 'forum') => {
+    const hash = article === 'forum' ? '#artigo-salvador-maiaze-forum-portugal' : article === 'vuka' ? '#artigo-salvador-maiaze-cta' : '#artigo-btv-tvcabo'
     window.history.pushState({article}, '', hash)
     setActiveArticle(article)
     window.scrollTo({top:0,behavior:'instant'})
@@ -228,10 +230,10 @@ export default function App() {
             {[
               {label:'BTV · EXPANSÃO',heading:'BTV reforça presença nacional com entrada na TVCABO',number:'01',icon:Tv,date:'23 de Setembro de 2026',excerpt:'Desde 1 de Outubro, o canal integra a grelha da TVCABO na posição 323, alargando o acesso à informação, cultura e entretenimento produzidos em Moçambique.',image:'https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp',url:'https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o'},
               {label:'VUKA LOGÍSTICA · INTERNACIONALIZAÇÃO',heading:'Salvador Maiaze integra delegação empresarial da CTA em missão aos Estados Unidos da América',number:'02',icon:Truck,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial orientada para novas oportunidades de cooperação económica internacional.',image:salvadorMissaoFoto,url:'#artigo-salvador-maiaze-cta'},
-              {label:'ACTIVIDADES',heading:'Espaço reservado para eventos e realizações',number:'03',icon:Handshake,date:null,excerpt:null,image:null,url:null},
+              {label:'VUKA LOGÍSTICA · COOPERAÇÃO',heading:'Salvador Maiaze participa no Fórum Económico Portugal–Moçambique',number:'03',icon:Handshake,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou no fórum realizado no Porto, dedicado à cooperação e às oportunidades empresariais entre os dois países.',image:forumPortugalFoto,url:'#artigo-salvador-maiaze-forum-portugal'},
             ].map(item => <article className={'news-card' + (item.url ? ' news-card-published' : '')} key={item.number}>
               <div className="news-card-media">
-                {item.image ? <img className="news-card-image" src={item.image} alt={item.number === '02' ? 'Delegação empresarial moçambicana nos Estados Unidos da América' : 'Anúncio da chegada da BTV à grelha da TVCABO'} loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
+                {item.image ? <img className="news-card-image" src={item.image} alt={item.number === '03' ? 'Intervenção no Fórum Económico Portugal–Moçambique' : item.number === '02' ? 'Delegação empresarial moçambicana nos Estados Unidos da América' : 'Anúncio da chegada da BTV à grelha da TVCABO'} loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
                 <span className="news-card-number">{item.number} / 03</span>
                 {!item.image && <span className="news-card-media-note">IMAGEM DO ARTIGO</span>}
               </div>
@@ -242,10 +244,10 @@ export default function App() {
                 {item.excerpt ? <p className="news-card-excerpt">{item.excerpt}</p> : <span className="news-card-pending">Conteúdo a adicionar</span>}
                 {item.url && <span className="news-card-read">Ler notícia completa <ArrowUpRight size={17}/></span>}
               </div>
-              {item.url && <button className="news-card-hitarea" type="button" onClick={() => openArticle(item.number === '02' ? 'vuka' : 'btv')} aria-label={'Ler artigo completo: ' + item.heading}/>}
+              {item.url && <button className="news-card-hitarea" type="button" onClick={() => openArticle(item.number === '03' ? 'forum' : item.number === '02' ? 'vuka' : 'btv')} aria-label={'Ler artigo completo: ' + item.heading}/>}
             </article>)}
           </div>
-          <p className="news-disclaimer">Os próximos acontecimentos serão acrescentados à medida que forem disponibilizados novos artigos e fotografias.</p>
+          <p className="news-disclaimer">Acompanhe os acontecimentos e iniciativas das empresas do Grupo Mbewu.</p>
         </div>
       </section>
     </main> : <main className="article-page" id="artigo-btv" aria-labelledby="article-full-title">
@@ -255,7 +257,51 @@ export default function App() {
           <span className="article-breadcrumb">GRUPO MBEWU <span>/</span> ACTUALIDADE</span>
         </div>
       </div>
-      {activeArticle === 'vuka' ? <>
+      {activeArticle === 'forum' ? <>
+      <article className="article-page-article">
+        <div className="article-shell">
+          <header className="article-page-heading">
+            <span className="article-category">VUKA LOGÍSTICA <span className="article-category-dot">·</span> COOPERAÇÃO INTERNACIONAL</span>
+            <h1 id="article-full-title">Salvador Maiaze Participa no Fórum Económico Portugal–Moçambique e Destaca Oportunidades de Cooperação Empresarial</h1>
+            <p className="article-page-standfirst">O empresário participou no encontro realizado no Porto, dedicado ao reforço das relações empresariais e à identificação de oportunidades de investimento entre Moçambique e Portugal.</p>
+            <div className="article-meta"><span>Vuka Logística &amp; Serviços</span><span className="article-meta-divider" aria-hidden="true"/><span>Felisberto Ruco</span></div>
+          </header>
+          <figure className="article-page-figure">
+            <img className="article-featured" src={forumPortugalFoto} alt="Intervenção no Fórum Económico Portugal–Moçambique, na cidade do Porto" />
+            <figcaption>Fórum Económico Portugal–Moçambique, na cidade do Porto.</figcaption>
+          </figure>
+          <div className="article-content article-page-content">
+            <p className="article-lead">O empresário moçambicano Salvador Maiaze, ligado à Vuka Logística &amp; Serviços, empresa integrante do Grupo Mbewu, participou no Fórum Económico Portugal–Moçambique, realizado na cidade do Porto, num encontro dedicado ao reforço das relações empresariais, à cooperação bilateral e à identificação de novas oportunidades de investimento entre os dois países.</p>
+            <p>A participação de Salvador Maiaze nesta iniciativa enquadra-se numa perspectiva de aproximação a mercados internacionais e de valorização das oportunidades de colaboração entre empresas moçambicanas e portuguesas.</p>
+            <p>O fórum reuniu representantes empresariais e institucionais num espaço de diálogo sobre as relações económicas entre Moçambique e Portugal, proporcionando oportunidades de intercâmbio de experiências, estabelecimento de contactos e identificação de áreas com potencial para futuras parcerias.</p>
+            <h3>Cooperação Bilateral e Novas Oportunidades de Investimento</h3>
+            <p>Numa publicação divulgada nas redes sociais, Salvador Maiaze destacou a importância do encontro para o fortalecimento das relações económicas entre os dois países.</p>
+            <p>O empresário considerou a participação no Fórum Económico Portugal–Moçambique uma oportunidade de diálogo estratégico, de reforço da cooperação bilateral e de abertura de novos caminhos para o investimento.</p>
+            <p>A iniciativa constituiu igualmente uma plataforma de aproximação entre empresários, permitindo discutir perspectivas de crescimento, colaboração institucional e desenvolvimento de relações comerciais.</p>
+            <p>Para Salvador Maiaze, a presença moçambicana nestes espaços internacionais representa uma oportunidade de demonstrar o potencial do País e a capacidade dos seus empresários de participarem activamente em iniciativas de cooperação económica.</p>
+            <h3>Internacionalização e Visão Empresarial</h3>
+            <p>A participação no fórum assume particular relevância para empresas interessadas em acompanhar a evolução dos mercados internacionais e identificar oportunidades de cooperação.</p>
+            <p>No caso da Vuka Logística &amp; Serviços, que desenvolve actividades nos sectores da logística, transporte e serviços operacionais, a aproximação a espaços de relacionamento empresarial internacional poderá contribuir para o conhecimento de novos mercados e potenciais parceiros.</p>
+            <p>A presença de Salvador Maiaze neste encontro reforça, igualmente, a dimensão internacional do seu percurso empresarial e a importância atribuída ao diálogo, à cooperação e à criação de novas oportunidades de desenvolvimento.</p>
+            <p>O empresário sublinhou, na sua publicação, o orgulho de representar Moçambique num espaço onde a cultura, a liderança e a visão empresarial se encontram.</p>
+            <p>A participação no Fórum Económico Portugal–Moçambique constitui, assim, mais um momento de presença internacional associado ao universo empresarial do Grupo Mbewu, sem prejuízo de eventuais resultados comerciais dependerem de negociações e contactos posteriores.</p>
+          </div>
+        </div>
+        <aside className="article-related" aria-labelledby="related-title">
+          <div className="article-related-heading"><span className="eyebrow dark-eyebrow">ACTUALIDADE DO GRUPO</span><h2 id="related-title">Outros acontecimentos</h2></div>
+          <div className="article-related-grid">
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('btv')}>
+              <div className="related-card-visual related-card-photo"><img src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="Acordo BTV e TVCABO" loading="lazy"/><span>BTV · EXPANSÃO</span></div>
+              <div className="related-card-copy"><span>NOTÍCIAS</span><h3>BTV reforça presença nacional com entrada na TVCABO</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('vuka')}>
+              <div className="related-card-visual related-card-photo"><img src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana" loading="lazy"/><span>VUKA LOGÍSTICA · CTA</span></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze integra delegação empresarial da CTA aos Estados Unidos</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
+          </div>
+        </aside>
+      </article>
+      </> : activeArticle === 'vuka' ? <>
       <article className="article-page-article">
         <div className="article-shell">
           <header className="article-page-heading">
@@ -296,6 +342,10 @@ export default function App() {
               <div className="related-card-visual related-card-photo"><img src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV e TVCABO assinam acordo" loading="lazy"/><span>BTV · EXPANSÃO</span></div>
               <div className="related-card-copy"><span>NOTÍCIAS</span><h3>BTV reforça presença nacional com entrada na TVCABO</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('forum')}>
+              <div className="related-card-visual related-card-photo"><img src={forumPortugalFoto} alt="Fórum Económico Portugal–Moçambique" loading="lazy"/><span>PORTUGAL · MOÇAMBIQUE</span></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze participa no Fórum Económico Portugal–Moçambique</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
           </div>
         </aside>
       </article>
@@ -335,6 +385,10 @@ export default function App() {
             <button className="related-card related-card-link" type="button" onClick={() => openArticle('vuka')}>
               <div className="related-card-visual related-card-photo"><img src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana" loading="lazy"/><span>VUKA LOGÍSTICA · CTA</span></div>
               <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze integra delegação empresarial da CTA aos Estados Unidos</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('forum')}>
+              <div className="related-card-visual related-card-photo"><img src={forumPortugalFoto} alt="Fórum Económico Portugal–Moçambique" loading="lazy"/><span>PORTUGAL · MOÇAMBIQUE</span></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze participa no Fórum Económico Portugal–Moçambique</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
             </button>
           </div>
         </aside>

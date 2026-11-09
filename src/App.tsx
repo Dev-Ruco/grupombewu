@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import btvLogo from './assets/logos/empresas/btv.png'
 import mlcLogo from './assets/logos/empresas/maputo-luxury-cars.png'
 import bnewsLogo from './assets/logos/empresas/bnews.png'
@@ -69,6 +69,13 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
 export default function App() {
   const [menuOpen,setMenuOpen] = useState(false)
   const [scrolled,setScrolled] = useState(false)
+  const newsTrackRef = useRef<HTMLDivElement>(null)
+  const moveNews = (direction: number) => {
+    const track = newsTrackRef.current
+    if (!track) return
+    const card = track.querySelector<HTMLElement>('.news-card')
+    track.scrollBy({left: direction * (card ? card.getBoundingClientRect().width + 22 : track.clientWidth * .8), behavior: 'smooth'})
+  }
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', fn, {passive:true}); fn()
@@ -99,7 +106,7 @@ export default function App() {
     <header className={'site-header '+(scrolled?'is-scrolled':'')}>
       <div className="container header-inner">
         <Logo/><nav className={menuOpen?'nav-links open':'nav-links'} aria-label="Navegação principal">
-          <a onClick={closeMenu} href="#inicio">Início</a><a onClick={closeMenu} href="#sobre">Sobre</a><a onClick={closeMenu} href="#empresas">Empresas</a><a onClick={closeMenu} href="#actuacao">Áreas de actuação</a><a onClick={closeMenu} href="#contactos">Contactos</a>
+          <a onClick={closeMenu} href="#inicio">Início</a><a onClick={closeMenu} href="#sobre">Sobre</a><a onClick={closeMenu} href="#empresas">Empresas</a><a onClick={closeMenu} href="#actuacao">Áreas de actuação</a><a onClick={closeMenu} href="#actualidade">Actualidade</a><a onClick={closeMenu} href="#contactos">Contactos</a>
         </nav>
         <a className="header-cta" href="#contactos"><span>Fale connosco</span><ArrowUpRight size={17}/></a>
         <button type="button" className="menu-toggle" aria-label={menuOpen?'Fechar menu':'Abrir menu'} aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
@@ -162,14 +169,43 @@ export default function App() {
           </div>
         </div>
       </section>
-      <section id="contactos" className="contact-section"><div className="container contact-layout"><div data-reveal><span className="eyebrow">VAMOS CONVERSAR</span><h2>Novas ideias.<br/><em>Novas oportunidades.</em></h2><p>Quer estabelecer uma parceria ou saber mais sobre o Grupo Mbewu? Estamos disponíveis para conversar.</p><address className="contact-details">
-  <div className="contact-detail"><MapPin size={20}/><span>Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar<br/>Bairro da Malhangalene<br/>Maputo, Moçambique</span></div>
-  <a className="contact-detail" href="mailto:info@grupombewu.co.mz"><Mail size={20}/><span>info@grupombewu.co.mz</span></a>
-  <a className="contact-detail" href="tel:+258858000800"><Phone size={20}/><span>+258 85 800 0800</span></a>
-</address></div><div data-reveal className="contact-symbol"><TreeMark/><span>JUNTOS, CONSTRUÍMOS O FUTURO.</span></div></div></section>
+      <section id="actualidade" className="news-section" aria-labelledby="news-heading">
+        <div className="container">
+          <div data-reveal className="news-heading">
+            <div className="news-heading-copy">
+              <span className="eyebrow dark-eyebrow">ACONTECE NO GRUPO</span>
+              <h2 id="news-heading">Últimos <em>acontecimentos.</em></h2>
+              <p>Notícias, projectos e iniciativas das empresas do Grupo Mbewu.</p>
+            </div>
+            <div className="news-controls" aria-label="Navegação dos destaques">
+              <button className="news-arrow" type="button" onClick={() => moveNews(-1)} aria-label="Ver destaques anteriores"><ArrowRight size={21} className="news-arrow-back"/></button>
+              <button className="news-arrow" type="button" onClick={() => moveNews(1)} aria-label="Ver destaques seguintes"><ArrowRight size={21}/></button>
+            </div>
+          </div>
+          <div className="news-track" ref={newsTrackRef} role="region" aria-label="Carrossel de acontecimentos" tabIndex={0}>
+            {[
+              {label:'NOTÍCIAS',heading:'Espaço reservado para notícias do Grupo',number:'01',icon:Tv},
+              {label:'PROJECTOS',heading:'Espaço reservado para projectos e iniciativas',number:'02',icon:Layers3},
+              {label:'ACTIVIDADES',heading:'Espaço reservado para eventos e realizações',number:'03',icon:Handshake},
+            ].map(item => <article className="news-card" key={item.number}>
+              <div className="news-card-media">
+                <span className="news-card-number">{item.number} / 03</span>
+                <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>
+                <span className="news-card-media-note">IMAGEM DO ARTIGO</span>
+              </div>
+              <div className="news-card-body">
+                <span className="news-card-category">{item.label}</span>
+                <h3>{item.heading}</h3>
+                <span className="news-card-pending">Conteúdo a adicionar</span>
+              </div>
+            </article>)}
+          </div>
+          <p className="news-disclaimer">Os cartões são espaços de preparação. As notícias e fotografias serão publicadas depois de fornecidas e confirmadas.</p>
+        </div>
+      </section>
     </main>
-    <footer className="footer"><div className="container">
-      <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
+    <footer id="contactos" className="footer"><div className="container">
+      <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a><a href="#actualidade">Actualidade</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Grupo Mbewu. Todos os direitos reservados.</span><span>Desenvolvido com visão de futuro.</span></div>
     </div></footer>
   </>

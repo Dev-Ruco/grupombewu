@@ -25,3 +25,13 @@
 .company-bnews .company-logo-art{filter:grayscale(1) brightness(1.35) contrast(1.5);mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 69% 70% at center,#000 56%,transparent 100%);mask-image:radial-gradient(ellipse 69% 70% at center,#000 56%,transparent 100%)}
 @media(max-width:1100px){.companies-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}}
 @media(max-width:680px){.companies-grid{grid-template-columns:1fr;gap:17px}.company-card{min-height:0}.company-card-head{padding:20px 22px 0}.company-logo-stage{height:132px;min-height:132px;margin:8px 22px}.company-card-content{padding:0 22px 20px}.company-card-action{margin:0 22px}.company-card-content h3{font-size:21px}}
+
+/* BNEWS: compensar as margens internas largas do PNG quadrado.
+   O aumento é restrito ao logótipo, sem alterar dimensões dos cartões. */
+.company-bnews .company-logo-art{
+  transform:scale(1.8);
+  transform-origin:center center;
+}
+@media(max-width:680px){
+  .company-bnews .company-logo-art{transform:scale(1.72)}
+}

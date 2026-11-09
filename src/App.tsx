@@ -238,7 +238,7 @@ export default function App() {
           <span className="article-category">BTV <span className="article-category-dot">·</span> EXPANSÃO</span>
           <h1 id="article-full-title">BTV reforça presença nacional com entrada na TVCABO</h1>
           <p className="article-page-standfirst">O canal alargou a sua distribuição ao integrar a grelha da TVCABO na posição 323, aproximando a programação de mais famílias moçambicanas.</p>
-          <div className="article-meta"><span>23 de Setembro de 2026</span><span className="article-meta-divider" aria-hidden="true"/> <span>Texto adaptado de reportagem da BNEWS · Délio Timane</span></div>
+          <div className="article-meta"><span>23 de Setembro de 2026</span><span className="article-meta-divider" aria-hidden="true"/> <span>BNEWS · Délio Timane</span></div>
         </header>
         <figure className="article-page-figure">
           <img className="article-featured" src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV anuncia a sua entrada na grelha da TVCABO" />
@@ -254,10 +254,26 @@ export default function App() {
             <p>O Director-Geral da TVCABO Moçambique, Humberto Barros, assinalou que a entrada da BTV está alinhada com a estratégia da operadora de dar maior visibilidade aos canais e às produções nacionais.</p>
             <blockquote>"A entrada do canal na nossa grelha programática reforça aquilo que tem sido o nosso trajecto ao longo dos anos, especialmente nos últimos anos: dar espaço ao conteúdo nacional e à produção local", declarou Humberto Barros.</blockquote>
             <p>A parceria alarga os meios de acesso à informação e ao entretenimento produzidos em Moçambique, ao mesmo tempo que fortalece a presença da BTV no mercado televisivo nacional.</p>
-            <div className="article-source"><span>Texto adaptado para a actualidade institucional do Grupo Mbewu.</span><a href="https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o" target="_blank" rel="noopener noreferrer">Consultar reportagem original na BNEWS <ArrowUpRight size={17}/></a></div>
+
 
         </div>
-        <div className="article-page-bottom"><button className="article-back" type="button" onClick={closeArticle}><ArrowRight size={19} className="article-back-icon"/> Voltar aos acontecimentos</button></div>
+        <aside className="article-related" aria-labelledby="related-title">
+          <div className="article-related-heading">
+            <span className="eyebrow dark-eyebrow">ACTUALIDADE DO GRUPO</span>
+            <h2 id="related-title">Outros acontecimentos</h2>
+            <p>Novas notícias e iniciativas das empresas do Grupo Mbewu serão apresentadas aqui.</p>
+          </div>
+          <div className="article-related-grid">
+            <article className="related-card">
+              <div className="related-card-visual"><Layers3 size={38} strokeWidth={1.25} aria-hidden="true"/><span>PROJECTOS</span></div>
+              <div className="related-card-copy"><span>EM PREPARAÇÃO</span><h3>Próximos projectos e iniciativas do Grupo</h3><p>Este espaço será actualizado com um novo artigo.</p></div>
+            </article>
+            <article className="related-card">
+              <div className="related-card-visual"><Handshake size={38} strokeWidth={1.25} aria-hidden="true"/><span>ACTIVIDADES</span></div>
+              <div className="related-card-copy"><span>EM PREPARAÇÃO</span><h3>Novas actividades e realizações</h3><p>Este espaço será actualizado com um novo artigo.</p></div>
+            </article>
+          </div>
+        </aside>
       </article>
     </main>}
     <footer id="contactos" className="footer"><div className="container">

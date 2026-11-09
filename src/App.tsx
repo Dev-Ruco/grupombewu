@@ -9,8 +9,8 @@ import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Ma
 
 const companies = [
   { id: 'btv', name: 'BTV', category: 'MEDIA & TELEVISÃO', short: 'Televisão, conteúdos audiovisuais, informação e entretenimento.', logo: btvLogo, accent: 'pink' },
-  { id: 'mlc', name: 'Maputo Luxury Cars', category: 'MOBILIDADE PREMIUM', short: 'Serviços de transporte com motorista e soluções de mobilidade premium.', logo: mlcLogo, accent: 'copper', url: 'https://maputoluxurycars.co.mz' },
-  { id: 'bnews', name: 'BNEWS', category: 'INFORMAÇÃO', short: 'Notícias, actualidade e conteúdos informativos.', logo: bnewsLogo, accent: 'red' },
+  { id: 'mlc', name: 'Maputo Luxury Cars', category: 'MOBILIDADE PREMIUM', short: 'Serviços de transporte com motorista e soluções de mobilidade premium.', logo: mlcLogo, accent: 'copper', url: 'https://maputoluxurycars.co.mz/' },
+  { id: 'bnews', name: 'BNEWS', category: 'INFORMAÇÃO', short: 'Notícias, actualidade e conteúdos informativos.', logo: bnewsLogo, accent: 'red', url: 'https://bnews.co.mz/' },
   { id: 'bawito', name: 'Bawito Music & Serviços', category: 'MÚSICA & EVENTOS', short: 'Gestão artística, produção e serviços ligados ao entretenimento.', logo: bawitoLogo, accent: 'blue' },
   { id: 'security', name: '24/7 Security', category: 'SEGURANÇA', short: 'Serviços de segurança e protecção de pessoas e património.', logo: securityLogo, accent: 'scarlet' },
   { id: 'vuka', name: 'Vuka Logística & Serviços', category: 'LOGÍSTICA', short: 'Soluções de logística, transporte e serviços operacionais.', logo: vukaLogo, accent: 'royal' },
@@ -61,7 +61,7 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
       <p>{company.short}</p>
     </div>
     <div className="company-card-action">
-      {website && <a href={website} target="_blank" rel="noopener noreferrer" className="company-link">Visitar website <ArrowUpRight size={15}/></a>}
+      {website && <a href={website} target="_blank" rel="noopener noreferrer" className="company-link">Saber mais <ArrowUpRight size={15}/></a>}
     </div>
   </article>
 }

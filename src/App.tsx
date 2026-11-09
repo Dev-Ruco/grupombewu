@@ -6,6 +6,7 @@ import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
+import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const companies = [
@@ -69,7 +70,13 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
 export default function App() {
   const [menuOpen,setMenuOpen] = useState(false)
   const [scrolled,setScrolled] = useState(false)
-  const [articleOpen,setArticleOpen] = useState(() => window.location.hash === '#artigo-btv-tvcabo')
+  const getArticleFromHash = (): 'btv' | 'vuka' | null => {
+    if (window.location.hash === '#artigo-btv-tvcabo') return 'btv'
+    if (window.location.hash === '#artigo-salvador-maiaze-cta') return 'vuka'
+    return null
+  }
+  const [activeArticle,setActiveArticle] = useState<'btv' | 'vuka' | null>(getArticleFromHash)
+  const articleOpen = activeArticle !== null
   const newsTrackRef = useRef<HTMLDivElement>(null)
   const moveNews = (direction: number) => {
     const track = newsTrackRef.current
@@ -109,7 +116,7 @@ export default function App() {
   useEffect(() => {
     if (articleOpen) return
     const hash = window.location.hash
-    if (!hash || hash === '#artigo-btv-tvcabo') return
+    if (!hash || hash.startsWith('#artigo-')) return
     const id = decodeURIComponent(hash.slice(1))
     const raf = window.requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({behavior:'instant'})
@@ -117,7 +124,7 @@ export default function App() {
     return () => window.cancelAnimationFrame(raf)
   }, [articleOpen])
   useEffect(() => {
-    const syncLocation = () => setArticleOpen(window.location.hash === '#artigo-btv-tvcabo')
+    const syncLocation = () => setActiveArticle(getArticleFromHash())
     window.addEventListener('popstate', syncLocation)
     window.addEventListener('hashchange', syncLocation)
     return () => {
@@ -125,14 +132,15 @@ export default function App() {
       window.removeEventListener('hashchange', syncLocation)
     }
   }, [])
-  const openArticle = () => {
-    window.history.pushState({article:'btv-tvcabo'}, '', '#artigo-btv-tvcabo')
-    setArticleOpen(true)
+  const openArticle = (article: 'btv' | 'vuka') => {
+    const hash = article === 'vuka' ? '#artigo-salvador-maiaze-cta' : '#artigo-btv-tvcabo'
+    window.history.pushState({article}, '', hash)
+    setActiveArticle(article)
     window.scrollTo({top:0,behavior:'instant'})
   }
   const closeArticle = () => {
     window.history.pushState({}, '', '#actualidade')
-    setArticleOpen(false)
+    setActiveArticle(null)
     window.requestAnimationFrame(() => document.getElementById('actualidade')?.scrollIntoView({behavior:'instant'}))
   }
   const closeMenu = () => setMenuOpen(false)
@@ -219,11 +227,11 @@ export default function App() {
           <div className="news-track" ref={newsTrackRef} role="region" aria-label="Carrossel de acontecimentos" tabIndex={0}>
             {[
               {label:'BTV · EXPANSÃO',heading:'BTV reforça presença nacional com entrada na TVCABO',number:'01',icon:Tv,date:'23 de Setembro de 2026',excerpt:'Desde 1 de Outubro, o canal integra a grelha da TVCABO na posição 323, alargando o acesso à informação, cultura e entretenimento produzidos em Moçambique.',image:'https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp',url:'https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o'},
-              {label:'PROJECTOS',heading:'Espaço reservado para projectos e iniciativas',number:'02',icon:Layers3,date:null,excerpt:null,image:null,url:null},
+              {label:'VUKA LOGÍSTICA · INTERNACIONALIZAÇÃO',heading:'Salvador Maiaze integra delegação empresarial da CTA em missão aos Estados Unidos da América',number:'02',icon:Truck,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial orientada para novas oportunidades de cooperação económica internacional.',image:salvadorMissaoFoto,url:'#artigo-salvador-maiaze-cta'},
               {label:'ACTIVIDADES',heading:'Espaço reservado para eventos e realizações',number:'03',icon:Handshake,date:null,excerpt:null,image:null,url:null},
             ].map(item => <article className={'news-card' + (item.url ? ' news-card-published' : '')} key={item.number}>
               <div className="news-card-media">
-                {item.image ? <img className="news-card-image" src={item.image} alt="Anúncio da chegada da BTV à grelha da TVCABO" loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
+                {item.image ? <img className="news-card-image" src={item.image} alt={item.number === '02' ? 'Delegação empresarial moçambicana nos Estados Unidos da América' : 'Anúncio da chegada da BTV à grelha da TVCABO'} loading="lazy" decoding="async"/> : <item.icon size={56} strokeWidth={1.15} aria-hidden="true"/>}
                 <span className="news-card-number">{item.number} / 03</span>
                 {!item.image && <span className="news-card-media-note">IMAGEM DO ARTIGO</span>}
               </div>
@@ -234,10 +242,10 @@ export default function App() {
                 {item.excerpt ? <p className="news-card-excerpt">{item.excerpt}</p> : <span className="news-card-pending">Conteúdo a adicionar</span>}
                 {item.url && <span className="news-card-read">Ler notícia completa <ArrowUpRight size={17}/></span>}
               </div>
-              {item.url && <button className="news-card-hitarea" type="button" onClick={openArticle} aria-label={'Ler artigo completo: ' + item.heading}/>}
+              {item.url && <button className="news-card-hitarea" type="button" onClick={() => openArticle(item.number === '02' ? 'vuka' : 'btv')} aria-label={'Ler artigo completo: ' + item.heading}/>}
             </article>)}
           </div>
-          <p className="news-disclaimer">Os restantes cartões serão actualizados à medida que forem disponibilizados novos artigos e fotografias.</p>
+          <p className="news-disclaimer">Os próximos acontecimentos serão acrescentados à medida que forem disponibilizados novos artigos e fotografias.</p>
         </div>
       </section>
     </main> : <main className="article-page" id="artigo-btv" aria-labelledby="article-full-title">
@@ -247,6 +255,51 @@ export default function App() {
           <span className="article-breadcrumb">GRUPO MBEWU <span>/</span> ACTUALIDADE</span>
         </div>
       </div>
+      {activeArticle === 'vuka' ? <>
+      <article className="article-page-article">
+        <div className="article-shell">
+          <header className="article-page-heading">
+            <span className="article-category">VUKA LOGÍSTICA <span className="article-category-dot">·</span> COOPERAÇÃO INTERNACIONAL</span>
+            <h1 id="article-full-title">Salvador Maiaze Integra Delegação Empresarial da CTA em Missão aos Estados Unidos da América</h1>
+            <p className="article-page-standfirst">Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial da CTA, dedicada ao diálogo, à partilha de experiências e à identificação de oportunidades de cooperação.</p>
+            <div className="article-meta"><span>Vuka Logística & Serviços</span><span className="article-meta-divider" aria-hidden="true"/><span>Felisberto Ruco</span></div>
+          </header>
+          <figure className="article-page-figure">
+            <img className="article-featured" src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana durante missão aos Estados Unidos da América, com a bandeira de Moçambique" />
+            <figcaption>Delegação empresarial moçambicana durante a missão aos Estados Unidos da América.</figcaption>
+          </figure>
+          <div className="article-content article-page-content">
+            <p className="article-lead">O empresário moçambicano Salvador Maiaze participou, em representação da Vuka Logística & Serviços, numa missão empresarial aos Estados Unidos da América, integrada por uma delegação da Confederação das Associações Económicas de Moçambique (CTA), com o propósito de promover o diálogo empresarial, a partilha de experiências e a identificação de novas oportunidades de cooperação económica internacional.</p>
+            <p>A participação de Salvador Maiaze nesta iniciativa representa um passo importante no posicionamento institucional da Vuka Logística & Serviços, empresa integrante do Grupo Mbewu, num contexto de crescente procura de parcerias estratégicas e de oportunidades de expansão para o sector privado moçambicano.</p>
+            <p>A missão proporcionou um espaço de aproximação entre representantes empresariais, favorecendo o intercâmbio de conhecimentos e a exploração de possibilidades de colaboração entre empresas moçambicanas e potenciais parceiros internacionais.</p>
+            <h3>Vuka Logística Reforça Presença em Iniciativas de Cooperação Internacional</h3>
+            <p>A integração de Salvador Maiaze na delegação empresarial reflecte o interesse da Vuka Logística & Serviços em acompanhar iniciativas de internacionalização e estabelecer contactos que possam contribuir para o desenvolvimento das suas actividades.</p>
+            <p>A presença da empresa nesta missão insere-se numa perspectiva de crescimento sustentada pela identificação de oportunidades de negócio, pelo estabelecimento de relações institucionais e pela aproximação a mercados internacionais.</p>
+            <p>Numa publicação nas redes sociais, Salvador Maiaze manifestou satisfação pela oportunidade de integrar a delegação moçambicana.</p>
+            <blockquote>"Honrado por fazer parte da Delegação Empresarial Moçambicana nesta missão aos Estados Unidos da América, um espaço de diálogo, partilha de experiências e criação de novas oportunidades para o desenvolvimento económico do nosso País", afirmou.</blockquote>
+            <p>O empresário destacou igualmente a importância da cooperação internacional para o desenvolvimento económico nacional.</p>
+            <blockquote>"Continuamos a acreditar que o futuro constrói-se com visão, trabalho, cooperação e pontes que aproximam Moçambique do mundo", acrescentou.</blockquote>
+            <h3>Novas Perspectivas Para o Sector Privado Moçambicano</h3>
+            <p>A participação em missões empresariais internacionais constitui uma oportunidade para as empresas nacionais conhecerem diferentes práticas de gestão, estabelecerem contactos e identificarem potenciais áreas de colaboração.</p>
+            <p>Para a Vuka Logística & Serviços, a presença nesta iniciativa representa uma oportunidade de aproximação a novos parceiros e de acompanhamento das tendências internacionais nos sectores da logística, transporte e serviços.</p>
+            <p>A integração de Salvador Maiaze na delegação da CTA reforça, igualmente, a presença de empresas do Grupo Mbewu em espaços de relacionamento empresarial e cooperação económica, contribuindo para a projecção institucional do Grupo e das suas actividades.</p>
+            <p>Embora a missão tenha proporcionado contactos e oportunidades de diálogo, eventuais parcerias ou investimentos resultantes da iniciativa dependerão de desenvolvimentos posteriores.</p>
+          </div>
+        </div>
+        <aside className="article-related" aria-labelledby="related-title">
+          <div className="article-related-heading">
+            <span className="eyebrow dark-eyebrow">ACTUALIDADE DO GRUPO</span>
+            <h2 id="related-title">Outros acontecimentos</h2>
+          </div>
+          <div className="article-related-grid">
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('btv')}>
+              <div className="related-card-visual related-card-photo"><img src="https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp" alt="BTV e TVCABO assinam acordo" loading="lazy"/><span>BTV · EXPANSÃO</span></div>
+              <div className="related-card-copy"><span>NOTÍCIAS</span><h3>BTV reforça presença nacional com entrada na TVCABO</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
+          </div>
+        </aside>
+      </article>
+      </> : <>
       <article className="article-page-article">
         <div className="article-shell">
         <header className="article-page-heading">
@@ -277,20 +330,15 @@ export default function App() {
           <div className="article-related-heading">
             <span className="eyebrow dark-eyebrow">ACTUALIDADE DO GRUPO</span>
             <h2 id="related-title">Outros acontecimentos</h2>
-            <p>Novas notícias e iniciativas das empresas do Grupo Mbewu serão apresentadas aqui.</p>
           </div>
           <div className="article-related-grid">
-            <article className="related-card">
-              <div className="related-card-visual"><Layers3 size={38} strokeWidth={1.25} aria-hidden="true"/><span>PROJECTOS</span></div>
-              <div className="related-card-copy"><span>EM PREPARAÇÃO</span><h3>Próximos projectos e iniciativas do Grupo</h3><p>Este espaço será actualizado com um novo artigo.</p></div>
-            </article>
-            <article className="related-card">
-              <div className="related-card-visual"><Handshake size={38} strokeWidth={1.25} aria-hidden="true"/><span>ACTIVIDADES</span></div>
-              <div className="related-card-copy"><span>EM PREPARAÇÃO</span><h3>Novas actividades e realizações</h3><p>Este espaço será actualizado com um novo artigo.</p></div>
-            </article>
+            <button className="related-card related-card-link" type="button" onClick={() => openArticle('vuka')}>
+              <div className="related-card-visual related-card-photo"><img src={salvadorMissaoFoto} alt="Delegação empresarial moçambicana" loading="lazy"/><span>VUKA LOGÍSTICA · CTA</span></div>
+              <div className="related-card-copy"><span>COOPERAÇÃO INTERNACIONAL</span><h3>Salvador Maiaze integra delegação empresarial da CTA aos Estados Unidos</h3><p>Ler artigo completo <ArrowUpRight size={15}/></p></div>
+            </button>
           </div>
         </aside>
-      </article>
+      </article>      </>}
     </main>}
     <footer id="contactos" className="footer"><div className="container">
       <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a><a href="#actualidade">Actualidade</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>

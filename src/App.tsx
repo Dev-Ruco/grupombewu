@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { CookieNotice, LegalContent, getLegalPageFromHash, legalPageHash, type LegalPage } from './LegalCenter'
 import btvLogo from './assets/logos/empresas/btv.png'
 import mlcLogo from './assets/logos/empresas/maputo-luxury-cars.png'
 import bnewsLogo from './assets/logos/empresas/bnews.png'
@@ -91,6 +92,22 @@ export default function App() {
   }
   const [activeArticle,setActiveArticle] = useState<'btv' | 'vuka' | 'forum' | null>(getArticleFromHash)
   const articleOpen = activeArticle !== null
+  const [legalPage,setLegalPage] = useState<LegalPage | null>(getLegalPageFromHash)
+  const [cookiePreferencesRequest,setCookiePreferencesRequest] = useState(0)
+  const openCookiePreferences = () => setCookiePreferencesRequest(value => value + 1)
+  const openLegal = (page:LegalPage) => {
+    window.history.pushState({legal:page},'',legalPageHash(page))
+    setActiveArticle(null)
+    setLegalPage(page)
+    setMenuOpen(false)
+    window.scrollTo({top:0,behavior:'instant'})
+  }
+  const closeLegal = () => {
+    window.history.pushState({},'','#inicio')
+    setLegalPage(null)
+    setActiveArticle(null)
+    window.scrollTo({top:0,behavior:'instant'})
+  }
   const newsTrackRef = useRef<HTMLDivElement>(null)
   const moveNews = (direction: number) => {
     const track = newsTrackRef.current
@@ -126,9 +143,9 @@ export default function App() {
       observer.disconnect()
       targets.forEach(el => el.classList.add('is-visible'))
     }
-  }, [articleOpen])
+  }, [articleOpen,legalPage])
   useEffect(() => {
-    if (articleOpen) return
+    if (articleOpen || legalPage) return
     const hash = window.location.hash
     if (!hash || hash.startsWith('#artigo-')) return
     const id = decodeURIComponent(hash.slice(1))
@@ -138,7 +155,10 @@ export default function App() {
     return () => window.cancelAnimationFrame(raf)
   }, [articleOpen])
   useEffect(() => {
-    const syncLocation = () => setActiveArticle(getArticleFromHash())
+    const syncLocation = () => {
+      setActiveArticle(getArticleFromHash())
+      setLegalPage(getLegalPageFromHash())
+    }
     window.addEventListener('popstate', syncLocation)
     window.addEventListener('hashchange', syncLocation)
     return () => {
@@ -147,6 +167,7 @@ export default function App() {
     }
   }, [])
   const openArticle = (article: 'btv' | 'vuka' | 'forum') => {
+    setLegalPage(null)
     const hash = article === 'forum' ? '#artigo-salvador-maiaze-forum-portugal' : article === 'vuka' ? '#artigo-salvador-maiaze-cta' : '#artigo-btv-tvcabo'
     window.history.pushState({article}, '', hash)
     setActiveArticle(article)
@@ -168,7 +189,7 @@ export default function App() {
         <button type="button" className="menu-toggle" aria-label={menuOpen?'Fechar menu':'Abrir menu'} aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
       </div>
     </header>
-    {!articleOpen ? <main>
+    {legalPage ? <LegalContent page={legalPage} onBack={closeLegal} onNavigate={openLegal} onOpenPreferences={openCookiePreferences}/> : !articleOpen ? <main>
       <section id="inicio" className="hero hero-identity">
         <div className="hero-ambient hero-ambient-one" aria-hidden="true"/>
         <div className="hero-ambient hero-ambient-two" aria-hidden="true"/>
@@ -408,7 +429,14 @@ export default function App() {
     </main>}
     <footer id="contactos" className="footer"><div className="container">
       <div data-reveal className="footer-grid"><div><Logo footer/><p>Um grupo moçambicano. Diferentes sectores. Uma visão comum.</p></div><div><span className="footer-title">Explorar</span><a href="#sobre">Sobre o Grupo</a><a href="#empresas">Empresas</a><a href="#actuacao">Áreas de actuação</a><a href="#presidencia">Presidência</a><a href="#actualidade">Actualidade</a></div><div><span className="footer-title">Contactos</span><span className="footer-line"><MapPin size={16}/> Av. Paulo Samuel Kamkhomba, nº 1441, 1º Andar, Malhangalene, Maputo</span><a className="footer-line" href="mailto:info@grupombewu.co.mz"><Mail size={16}/> info@grupombewu.co.mz</a><a className="footer-line" href="tel:+258858000800"><Phone size={16}/> +258 85 800 0800</a></div><div><span className="footer-title">Grupo Mbewu</span><p>Conheça as marcas que fazem parte do nosso universo empresarial.</p></div></div>
+      <nav className="footer-legal" aria-label="Informações legais e privacidade">
+        <button type="button" onClick={() => openLegal('privacidade')}>Política de Privacidade</button>
+        <button type="button" onClick={() => openLegal('cookies')}>Política de Cookies</button>
+        <button type="button" onClick={() => openLegal('termos')}>Termos de Utilização</button>
+        <button type="button" onClick={openCookiePreferences}>Gerir cookies</button>
+      </nav>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} Grupo Mbewu. Todos os direitos reservados.</span><span>Desenvolvido com visão de futuro.</span></div>
     </div></footer>
+    <CookieNotice onNavigate={openLegal} openRequest={cookiePreferencesRequest}/>
   </>
 }

@@ -7,6 +7,7 @@ import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
+import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
 import forumPortugalFoto from './assets/images/Presidente-da-República-discursa-no-Fórum-Económico-Portugal-Moçambique-na-Cidade-do-Porto10-e1765356290135.jpeg'
 import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
@@ -34,25 +35,10 @@ const strengths = [
   { name: 'Parcerias estratégicas', text: 'Abertura à colaboração e à criação de novas oportunidades.', icon: Handshake },
 ]
 
-function TreeMark({small = false}:{small?:boolean}) {
-  return <svg className={small ? 'tree-mark small' : 'tree-mark'} viewBox="0 0 100 108" role="img" aria-label="Símbolo de árvore do Grupo Mbewu">
-    <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <path strokeWidth="5" d="M50 93c5-17 5-31 0-45M50 76c-14-6-24-17-33-30M51 65c14-5 26-16 34-28M48 86c-7 2-15 5-24 13M51 89c8 0 17 5 26 10M50 98c-14-1-27 1-38 5M50 98c14-1 27 1 38 5"/>
-      <path strokeWidth="2.5" d="M50 48 37 22M55 56 68 24M44 58 23 30M61 65 81 44"/>
-    </g>
-    <g fill="currentColor">
-      <ellipse cx="50" cy="13" rx="6" ry="12"/><ellipse cx="35" cy="17" rx="6" ry="11" transform="rotate(-30 35 17)"/><ellipse cx="65" cy="17" rx="6" ry="11" transform="rotate(30 65 17)"/>
-      <ellipse cx="21" cy="26" rx="6" ry="11" transform="rotate(-48 21 26)"/><ellipse cx="79" cy="26" rx="6" ry="11" transform="rotate(48 79 26)"/>
-      <ellipse cx="12" cy="40" rx="6" ry="11" transform="rotate(-65 12 40)"/><ellipse cx="88" cy="40" rx="6" ry="11" transform="rotate(65 88 40)"/>
-      <ellipse cx="26" cy="43" rx="6" ry="10" transform="rotate(-39 26 43)"/><ellipse cx="74" cy="43" rx="6" ry="10" transform="rotate(39 74 43)"/>
-      <ellipse cx="38" cy="35" rx="6" ry="10" transform="rotate(-22 38 35)"/><ellipse cx="62" cy="35" rx="6" ry="10" transform="rotate(22 62 35)"/>
-      <ellipse cx="11" cy="57" rx="5" ry="10" transform="rotate(-75 11 57)"/><ellipse cx="89" cy="57" rx="5" ry="10" transform="rotate(75 89 57)"/>
-      <ellipse cx="24" cy="60" rx="5" ry="10" transform="rotate(-65 24 60)"/><ellipse cx="76" cy="60" rx="5" ry="10" transform="rotate(65 76 60)"/>
-    </g>
-  </svg>
-}
 function Logo({footer=false}:{footer?:boolean}) {
-  return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início"><TreeMark small/><span className="brand-words"><span>GRUPO</span><strong>MBEWU</strong></span></a>
+  return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início">
+    <img className="brand-official-logo" src={grupoMbewuLogo} alt="Grupo Mbewu — logótipo oficial" decoding="async"/>
+  </a>
 }
 function CompanyCard({company}:{company:typeof companies[number]}) {
   const website = 'url' in company ? company.url : undefined

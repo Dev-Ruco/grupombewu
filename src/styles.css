@@ -93,3 +93,28 @@ a.contact-detail:hover{color:#5e5145;text-decoration:underline;text-underline-of
 @media(max-width:1100px){.hero.hero-identity h1{font-size:clamp(43px,5vw,62px)}.hero-identity-grid{grid-template-columns:1.15fr .85fr}.hero-identity-art{min-height:410px}.hero-identity-bottom-inner>span:nth-child(2){font-size:9px;gap:9px}}
 @media(max-width:800px){.hero.hero-identity{padding-top:74px;min-height:0}.hero-identity-grid{grid-template-columns:1fr;gap:0;padding-top:0;padding-bottom:22px}.hero-identity-copy{padding:76px 0 22px}.hero.hero-identity h1{font-size:clamp(41px,8.2vw,67px);margin:25px 0}.hero-identity-art{min-height:340px}.hero-official-logo{width:min(76%,345px);max-height:280px}.hero-identity-halo{max-width:350px;box-shadow:0 0 0 45px rgba(255,255,255,.014)}.hero-identity-art-note{bottom:11px}.hero-identity-bottom-inner{min-height:65px}.hero-identity-bottom-inner>span:nth-child(2){display:none}}
 @media(max-width:480px){.hero-identity-copy{padding:62px 0 18px}.hero-identity-eyebrow{font-size:9px;letter-spacing:.15em}.hero.hero-identity h1{font-size:clamp(38px,9.4vw,52px)}.hero-identity-copy>p{font-size:14px;line-height:1.8}.hero-identity .hero-actions{margin-top:27px}.hero-identity-art{min-height:275px}.hero-official-logo{width:min(88%,295px);max-height:250px}.hero-identity-art-note{font-size:8px;letter-spacing:.13em}.hero-identity-bottom-inner{min-height:58px}}
+
+/* Imagem oficial seleccionada para o Hero — sem tocar nas restantes secções. */
+.hero.hero-identity{
+  background-color:#14191e;
+  background-image:
+    linear-gradient(90deg,rgba(13,17,21,.96) 0%,rgba(16,20,24,.91) 31%,rgba(19,23,28,.67) 54%,rgba(18,21,25,.20) 100%),
+    url('./assets/images/Sleek Bronze-Lit Curved Architecture_Easy-Resize.com.jpg');
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+.hero.hero-identity:before{
+  background:linear-gradient(0deg,rgba(13,16,20,.53),transparent 25%,transparent 78%,rgba(15,18,22,.27));
+}
+.hero-identity-lines,.hero-ambient{display:none}
+.hero-identity-halo{opacity:.35}
+.hero-identity-art{filter:drop-shadow(0 10px 22px rgba(0,0,0,.4))}
+.hero-identity-copy>p{text-shadow:0 2px 12px rgba(0,0,0,.38)}
+.hero-identity-bottom{background:rgba(14,17,20,.55);backdrop-filter:blur(4px)}
+@media(max-width:800px){
+  .hero.hero-identity{
+    background-image:linear-gradient(180deg,rgba(13,17,21,.89) 0%,rgba(13,17,21,.78) 42%,rgba(13,17,21,.62) 100%),url('./assets/images/Sleek Bronze-Lit Curved Architecture_Easy-Resize.com.jpg');
+    background-position:62% center;
+  }
+}

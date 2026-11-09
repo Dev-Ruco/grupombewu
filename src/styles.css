@@ -317,3 +317,19 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
 @media(max-width:800px){.news-section{padding:82px 0 88px}.news-heading{align-items:flex-end}.news-heading h2{font-size:clamp(36px,5.5vw,51px)}.news-card{flex-basis:65%}}
 @media(max-width:570px){.news-heading{align-items:flex-end;gap:8px}.news-heading h2{font-size:36px}.news-heading p{font-size:13px}.news-controls{gap:6px}.news-arrow{width:39px;height:39px}.news-card{flex-basis:87%}.news-card-body{min-height:180px;padding:22px}.news-card h3{font-size:19px}.news-disclaimer{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.news-track{scroll-behavior:auto}.news-card,.news-card-media svg{transition:none!important}}
+
+/* Notícias publicadas: fotografia real, data, resumo e leitura completa. */
+.news-card-media .news-card-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--motion-ease)}
+.news-card-published:hover .news-card-image{transform:scale(1.045)}
+.news-card-published .news-card-media:after{background:linear-gradient(0deg,rgba(9,12,15,.36),transparent 48%)}
+.news-card-published .news-card-number{color:#fff;text-shadow:0 1px 9px rgba(0,0,0,.65)}
+.news-card-date{display:block;font-size:11px;color:#777a79;margin-top:8px;font-weight:500}
+.news-card-published .news-card-body{min-height:270px}
+.news-card-published .news-card-body h3{margin:13px 0 12px}
+.news-card-excerpt{font-size:13px;line-height:1.65;color:#606669;margin:0 0 17px}
+.news-card-read{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;font-size:12px;font-weight:800;margin-top:auto;color:#292e31;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:4px}
+.news-card-read:hover{color:#846a48}
+.news-card-read svg{transition:transform .3s var(--motion-ease)}
+.news-card-read:hover svg{transform:translate(3px,-2px)}
+@media(max-width:570px){.news-card-published .news-card-body{min-height:285px}}
+@media(prefers-reduced-motion:reduce){.news-card-media .news-card-image{transition:none}}

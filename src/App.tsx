@@ -36,8 +36,26 @@ const strengths = [
 ]
 
 function Logo({footer=false}:{footer?:boolean}) {
+  // Símbolo e letras extraídos directamente do logótipo fornecido pelo Grupo.
+  // O recorte preserva os desenhos originais e remove só o fundo grafite do PNG.
+  const filterId = footer ? 'mbewu-logo-ink-footer' : 'mbewu-logo-ink-header'
   return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início">
-    <img className="brand-official-logo" src={grupoMbewuLogo} alt="Grupo Mbewu — logótipo oficial" decoding="async"/>
+    <svg className="brand-original-symbol" viewBox="325 167 605 537" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <filter id={filterId} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+          <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="brightness"/>
+          <feComponentTransfer in="brightness" result="cutout">
+            <feFuncA type="linear" slope="1.7" intercept="-0.4"/>
+          </feComponentTransfer>
+          <feFlood floodColor="#FFFFFF" result="white"/>
+          <feComposite in="white" in2="cutout" operator="in"/>
+        </filter>
+      </defs>
+      <image href={grupoMbewuLogo} width="1254" height="1254" filter={`url(#${filterId})`}/>
+    </svg>
+    <svg className="brand-original-wordmark" viewBox="171 692 919 350" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <image href={grupoMbewuLogo} width="1254" height="1254" filter={`url(#${filterId})`}/>
+    </svg>
   </a>
 }
 function CompanyCard({company}:{company:typeof companies[number]}) {

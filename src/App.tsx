@@ -245,8 +245,8 @@ export default function App() {
             <span className="eyebrow dark-eyebrow">LIDERANÇA INSTITUCIONAL</span>
             <span className="president-kicker">Presidente do Grupo Mbewu</span>
             <h2 id="president-title">Salvador Pedro<br/><em>Maiaze.</em></h2>
-            <p className="president-intro">À frente do Grupo Mbewu, Salvador Pedro Maiaze representa a liderança institucional de uma organização que reúne empresas de diferentes sectores de actividade.</p>
-            <p>Esta secção apresenta a Presidência do Grupo. O percurso profissional e a mensagem institucional do Presidente serão acrescentados após validação dos respectivos conteúdos.</p>
+            <p className="president-intro">Salvador Pedro Maiaze lidera o Grupo Mbewu com uma visão orientada para o crescimento, a inovação e a criação de oportunidades. Sob a sua Presidência, o Grupo reúne empresas de diferentes sectores, com identidades próprias e uma ambição comum: gerar valor para Moçambique.</p>
+            <p>A sua liderança valoriza a cooperação entre as empresas, o compromisso com a qualidade e a construção de relações de confiança com clientes e parceiros, projectando o Grupo Mbewu como uma organização voltada para o futuro.</p>
           </div>
         </div>
       </section>

@@ -1214,3 +1214,201 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
   .showcase-placeholder>svg,
   .showcase-caption:before{transition:none!important}
 }
+
+/* Auditoria UX móvel — Novembro 2026.
+   Apenas breakpoints móveis; o design corporativo desktop fica intacto. */
+.mobile-nav-backdrop,
+.news-mobile-counter{display:none}
+@media (max-width:800px){
+  .site-header{isolation:isolate}
+  .menu-toggle{
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    flex:0 0 44px;
+    padding:0;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.24);
+    touch-action:manipulation;
+    transition:background .2s ease,border-color .2s ease;
+  }
+  .menu-toggle:focus-visible{
+    outline:2px solid #e2d2bc;
+    outline-offset:3px;
+  }
+  .menu-toggle:active{background:rgba(255,255,255,.14)}
+  .mobile-nav-backdrop{
+    position:fixed;
+    z-index:49;
+    display:block;
+    inset:74px 0 0;
+    width:100%;
+    border:0;
+    background:rgba(9,12,16,.56);
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  .site-header .nav-links.open{
+    position:absolute;
+    z-index:2;
+    top:74px;
+    max-height:calc(100dvh - 74px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    padding:12px max(19px,env(safe-area-inset-left)) max(22px,env(safe-area-inset-bottom));
+    box-shadow:0 20px 42px rgba(0,0,0,.28);
+    animation:mobileMenuEnter .24s ease-out both;
+  }
+  .site-header .nav-links a{
+    display:flex;
+    align-items:center;
+    width:100%;
+    max-width:100%;
+    padding:15px 10px;
+    min-height:48px;
+    border-bottom:1px solid rgba(255,255,255,.095);
+    font-size:15px;
+    line-height:1.35;
+    transform:none;
+    touch-action:manipulation;
+  }
+  .site-header .nav-links a:after{display:none}
+  .site-header .nav-links a:last-child{
+    margin-top:11px;
+    padding:14px 16px;
+    border:1px solid rgba(231,221,207,.24);
+    border-radius:5px;
+    color:#f9f6f0;
+    background:rgba(242,237,225,.10);
+  }
+  .site-header .nav-links a:active{background:rgba(255,255,255,.11)}
+  .header-cta{
+    min-width:44px;
+    min-height:44px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+    touch-action:manipulation;
+  }
+  .hero.hero-identity{min-height:0}
+  .hero-identity-grid.hero-identity-grid-solo{
+    min-height:clamp(470px,calc(100svh - 132px),650px);
+    padding-top:clamp(36px,7svh,65px);
+    padding-bottom:42px;
+  }
+  .hero-identity-copy>p{line-height:1.72}
+  .news-mobile-counter{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:52px;
+    font:750 12px/1.4 var(--font-display);
+    color:#747671;
+    font-variant-numeric:tabular-nums;
+  }
+  .news-track{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .news-arrow{min-width:44px;min-height:44px;touch-action:manipulation}
+  .article-back{min-height:44px;touch-action:manipulation}
+  .footer-legal button{min-height:42px;padding:9px 0}
+}
+@keyframes mobileMenuEnter{
+  from{opacity:0;transform:translateY(-9px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:600px){
+  .header-cta{display:none}
+  .hero.hero-identity h1{
+    font-size:clamp(36px,9.4vw,49px);
+    letter-spacing:-.052em;
+    line-height:1.14;
+  }
+  .hero-identity-copy>p{font-size:15px;line-height:1.72}
+  .hero-identity .hero-actions{gap:11px}
+  .hero-identity .hero-actions .btn{
+    min-height:48px;
+    font-size:13px;
+    padding:13px 15px;
+  }
+  .about{padding-block:70px}
+  .about-right p{font-size:15px;line-height:1.76}
+  .companies-section{padding-top:72px;padding-bottom:76px}
+  .companies-section .companies-grid{row-gap:30px}
+  .companies-section .company-logo-stage{height:100px;min-height:100px;margin-bottom:11px}
+  .companies-section .company-card-content h3{
+    font-size:clamp(15px,3.8vw,17px);
+    line-height:1.4;
+    letter-spacing:-.025em;
+    margin-bottom:9px;
+  }
+  .companies-section .company-card-content p{
+    font-size:clamp(13px,3.45vw,14.5px);
+    line-height:1.66;
+  }
+  .companies-section .company-card-action .company-link{
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    font-size:13px;
+    padding-block:10px;
+    touch-action:manipulation;
+  }
+  .services-section,.strengths-section{padding-block:73px}
+  .services-grid{grid-template-columns:1fr;gap:12px}
+  .service-card{
+    min-height:0;
+    padding:22px 22px 22px 76px;
+    position:relative;
+  }
+  .service-card>svg{
+    position:absolute;
+    top:27px;left:21px;
+    width:31px;height:31px;
+    margin:0;
+  }
+  .service-card h3{font-size:18px;line-height:1.4;margin:0 0 5px}
+  .service-card p{font-size:14px;line-height:1.65;margin:0}
+  .service-index{top:14px;right:16px}
+  .strengths-grid{grid-template-columns:1fr;gap:12px}
+  .strength-card{min-height:0;padding:23px 24px}
+  .strength-card svg{margin-bottom:14px}
+  .strength-card h3{font-size:17px;margin-bottom:7px}
+  .strength-card p{font-size:14px;line-height:1.65}
+  .showcase-section{padding-block:70px 78px}
+  .showcase-heading p{font-size:14px;line-height:1.67}
+  .showcase-grid{grid-template-columns:1fr;row-gap:25px}
+  .showcase-image-frame{aspect-ratio:16/10}
+  .showcase-caption{padding-top:13px}
+  .showcase-caption strong{font-size:17px}
+  .showcase-caption span{font-size:11px;letter-spacing:.075em}
+  .showcase-image-index{font-size:11px;top:15px;left:15px}
+  .news-card{flex-basis:calc(100% - 19px)}
+  .news-card-body{padding:21px 22px 24px}
+  .news-card h3{font-size:20px;line-height:1.4}
+  .news-card-excerpt{font-size:14px;line-height:1.68}
+  .news-card-category{font-size:11px}
+  .news-card-read{font-size:13px}
+  .news-card-published .news-card-body{min-height:0}
+  .article-page-content p{font-size:16px;line-height:1.82}
+  .article-page-content p.article-lead{font-size:18px;line-height:1.65}
+  .article-shell h1,.article-shell h3,.article-shell p{overflow-wrap:break-word}
+  .footer-bottom{line-height:1.65}
+}
+@media(min-width:601px) and (max-width:680px){
+  .showcase-image-frame{aspect-ratio:4/3}
+  .showcase-caption strong{font-size:15px}
+  .showcase-caption span{font-size:11px}
+}
+@media(max-width:360px){
+  .hero.hero-identity h1{font-size:clamp(33px,9.2vw,38px)}
+  .companies-section .company-card-content p{font-size:14px}
+  .service-card{padding-left:72px}
+  .news-card{flex-basis:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-header .nav-links.open{animation:none!important}
+  .mobile-nav-backdrop{backdrop-filter:none}
+}

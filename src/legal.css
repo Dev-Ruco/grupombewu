@@ -96,3 +96,51 @@
   .footer-legal{gap:9px 18px}
 }
 @media(prefers-reduced-motion:reduce){.cookie-banner{animation:none!important}.cookie-btn{transition:none}}
+
+/* Privacidade: painel compacto e confortável para dispositivos móveis. */
+@media (max-width:590px){
+  .cookie-banner{
+    bottom:calc(8px + env(safe-area-inset-bottom,0px));
+    max-height:min(50dvh,355px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    gap:10px;
+    padding:16px 17px;
+    box-shadow:0 15px 45px rgba(5,8,11,.27);
+  }
+  .cookie-banner-copy strong{font-size:15px;line-height:1.4}
+  .cookie-banner-copy p{font-size:13px;line-height:1.55;margin-top:5px}
+  .cookie-inline-link{
+    font-size:inherit;
+    min-height:28px;
+    touch-action:manipulation;
+  }
+  .cookie-banner-actions{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+  .cookie-banner-actions .cookie-btn{
+    min-width:0;
+    min-height:48px;
+    padding:10px;
+    font-size:12px;
+    line-height:1.35;
+    touch-action:manipulation;
+  }
+  .cookie-preferences{
+    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  .cookie-modal-close{min-width:44px;min-height:44px}
+  .cookie-save{min-height:48px}
+  .legal-page-layout{width:calc(100% - 40px)}
+  .legal-content a,.legal-inline-button{
+    text-decoration-thickness:1px;
+    text-underline-offset:4px;
+  }
+  .legal-other-links button,.legal-manage-button{min-height:44px;touch-action:manipulation}
+}
+@media(max-width:340px){
+  .cookie-banner-actions{grid-template-columns:1fr}
+  .cookie-banner{max-height:60dvh}
+}

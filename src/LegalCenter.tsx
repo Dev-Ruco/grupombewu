@@ -53,11 +53,11 @@ export function CookieNotice({ onNavigate, openRequest }: { onNavigate: (page: L
       <div className="cookie-banner-icon" aria-hidden="true"><Cookie size={23}/></div>
       <div className="cookie-banner-copy">
         <strong>A sua privacidade importa.</strong>
-        <p>Este website utiliza apenas armazenamento técnico para guardar a sua preferência de privacidade. Não estão configurados cookies de publicidade ou de análise de visitantes. <button type="button" className="cookie-inline-link" onClick={() => onNavigate('cookies')}>Saiba mais</button>.</p>
+        <p>Utilizamos armazenamento local apenas para guardar a sua preferência. Não utilizamos cookies de publicidade ou de estatística. <button type="button" className="cookie-inline-link" onClick={() => onNavigate('cookies')}>Saiba mais</button>.</p>
       </div>
       <div className="cookie-banner-actions">
         <button type="button" className="cookie-btn cookie-btn-secondary" onClick={() => setShowPreferences(true)}>Ver preferências</button>
-        <button type="button" className="cookie-btn cookie-btn-primary" onClick={savePreferences}>Continuar com necessários <Check size={15}/></button>
+        <button type="button" className="cookie-btn cookie-btn-primary" onClick={savePreferences} >Continuar <Check size={15}/></button>
       </div>
     </aside>}
     {showPreferences && <div className="cookie-modal-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) setShowPreferences(false) }}>

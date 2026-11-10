@@ -67,7 +67,7 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
           <filter id={`company-logo-cutout-${company.id}`} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
             <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="luminance"/>
             <feComponentTransfer in="luminance" result="cleanAlpha">
-              <feFuncA type="linear" slope="1.7" intercept="-0.2"/>
+              <feFuncA type="linear" slope={company.id === 'vuka' ? 2.35 : 1.7} intercept={company.id === 'vuka' ? -0.8 : -0.2}/>
             </feComponentTransfer>
             <feFlood floodColor="#FFFFFF" result="white"/>
             <feComposite in="white" in2="cleanAlpha" operator="in"/>

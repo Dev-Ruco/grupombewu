@@ -973,3 +973,47 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
     transition:none!important;
   }
 }
+
+/* Ligação institucional ao LinkedIn do Presidente — exclusiva da Presidência. */
+.president-linkedin{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  margin-top:17px;
+  padding:5px 0;
+  color:#273238;
+  font:700 13px/1.5 var(--font-display);
+  text-decoration:none;
+  transition:color .25s ease;
+}
+.president-linkedin-icon{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(34,43,49,.26);
+  border-radius:50%;
+  transition:background .25s ease,border-color .25s ease,color .25s ease;
+}
+.president-linkedin>svg:last-child{
+  opacity:.7;
+  transition:transform .25s ease;
+}
+.president-linkedin:hover,
+.president-linkedin:focus-visible{color:#0a66c2}
+.president-linkedin:hover .president-linkedin-icon,
+.president-linkedin:focus-visible .president-linkedin-icon{
+  background:#0a66c2;
+  border-color:#0a66c2;
+  color:white;
+}
+.president-linkedin:hover>svg:last-child,
+.president-linkedin:focus-visible>svg:last-child{transform:translate(3px,-3px);opacity:1}
+.president-linkedin:focus-visible{outline:2px solid #0a66c2;outline-offset:5px}
+@media(max-width:800px){
+  .president-linkedin{margin-top:13px;padding:8px 0}
+  .president-linkedin-icon{width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){
+  .president-linkedin,.president-linkedin-icon,.president-linkedin>svg:last-child{transition:none}
+}

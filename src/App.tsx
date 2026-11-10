@@ -6,6 +6,12 @@ import bnewsLogo from './assets/logos/empresas/bnews.png'
 import bawitoLogo from './assets/logos/empresas/bawito-music-servicos.png'
 import securityLogo from './assets/logos/empresas/24-7-security.png'
 import vukaLogo from './assets/logos/empresas/vuka-logistica-servicos.png'
+import showcaseBawito from './assets/images/Bawito Music_Easy-Resize.com.jpg'
+import showcaseVuka from './assets/images/Vuka_Easy-Resize.com.jpg'
+import showcaseBtv from './assets/images/BTV_Easy-Resize.com.jpg'
+import showcaseSecurity from './assets/images/24_7 Security at the Modern Entrance_Easy-Resize.com.jpg'
+import showcaseMlc from './assets/images/MLC_Easy-Resize.com.jpg'
+import showcaseBnews from './assets/images/BNEWS_Easy-Resize.com.jpg'
 import presidenteFoto from './assets/images/presidente/presidente.jpg'
 import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
@@ -28,12 +34,12 @@ const companies = [
 type ShowcasePhoto = { src: string; alt: string }
 type CompanyId = (typeof companies)[number]['id']
 const showcasePhotos: Record<CompanyId, ShowcasePhoto[]> = {
-  bawito: [],
-  vuka: [],
-  btv: [],
-  security: [],
-  mlc: [],
-  bnews: [],
+  bawito: [{ src: showcaseBawito, alt: 'Produção técnica e audiovisual de um evento corporativo da Bawito Music & Serviços' }],
+  vuka: [{ src: showcaseVuka, alt: 'Terminal portuário com navio de carga, contentores e operações logísticas' }],
+  btv: [{ src: showcaseBtv, alt: 'Câmara profissional em ambiente de produção televisiva da BTV' }],
+  security: [{ src: showcaseSecurity, alt: 'Equipa de segurança e viatura de apoio numa instalação empresarial' }],
+  mlc: [{ src: showcaseMlc, alt: 'Viaturas da Maputo Luxury Cars preparadas para um serviço especial' }],
+  bnews: [{ src: showcaseBnews, alt: 'Leitura das notícias da BNEWS num tablet' }],
 }
 const showcaseIcons = {
   bawito: Music2,
@@ -296,7 +302,7 @@ export default function App() {
               </figure>
             })}
           </div>
-          <p className="showcase-note">As fotografias institucionais das empresas serão acrescentadas a esta secção.</p>
+          
         </div>
       </section>
       <section id="presidencia" className="president-section" aria-labelledby="president-title">

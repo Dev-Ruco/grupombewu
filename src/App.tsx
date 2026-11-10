@@ -10,7 +10,7 @@ import presidenteFoto from './assets/images/presidente/presidente.jpg'
 import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
 import forumPortugalFoto from './assets/images/Presidente-da-República-discursa-no-Fórum-Económico-Portugal-Moçambique-na-Cidade-do-Porto10-e1765356290135.jpeg'
-import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react'
 
 const companies = [
   { id: 'bawito', name: 'Bawito Music & Serviços', category: 'MÚSICA & EVENTOS', short: 'Gestão artística, produção e serviços ligados ao entretenimento.', logo: bawitoLogo, accent: 'blue' },
@@ -247,6 +247,11 @@ export default function App() {
             <h2 id="president-title">Salvador Pedro<br/><em>Maiaze.</em></h2>
             <p className="president-intro">Salvador Pedro Maiaze lidera o Grupo Mbewu com uma visão orientada para o crescimento, a inovação e a criação de oportunidades. Sob a sua Presidência, o Grupo reúne empresas de diferentes sectores, com identidades próprias e uma ambição comum: gerar valor para Moçambique.</p>
             <p>A sua liderança valoriza a cooperação entre as empresas, o compromisso com a qualidade e a construção de relações de confiança com clientes e parceiros, projectando o Grupo Mbewu como uma organização voltada para o futuro.</p>
+            <a className="president-linkedin" href="https://www.linkedin.com/in/salvador-maiaze-4bb7b0430/" target="_blank" rel="noopener noreferrer" aria-label="Visitar o perfil de Salvador Pedro Maiaze no LinkedIn">
+              <span className="president-linkedin-icon"><Linkedin size={19} strokeWidth={2}/></span>
+              <span>Perfil no LinkedIn</span>
+              <ArrowUpRight size={17} strokeWidth={1.8}/>
+            </a>
           </div>
         </div>
       </section>

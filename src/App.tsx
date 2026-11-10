@@ -75,11 +75,11 @@ const strengths = [
   { name: 'Parcerias estratégicas', text: 'Abertura à colaboração e à criação de novas oportunidades.', icon: Handshake },
 ]
 
-function Logo({footer=false}:{footer?:boolean}) {
+function Logo({footer=false,onNavigate}:{footer?:boolean;onNavigate?:()=>void}) {
   // Símbolo e letras extraídos directamente do logótipo fornecido pelo Grupo.
   // O recorte preserva os desenhos originais e remove só o fundo grafite do PNG.
   const filterId = footer ? 'mbewu-logo-ink-footer' : 'mbewu-logo-ink-header'
-  return <a href="#inicio" className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início">
+  return <a href="#inicio" onClick={onNavigate} className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início">
     <svg className="brand-original-symbol" viewBox="325 167 605 537" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <filter id={filterId} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
@@ -128,6 +128,7 @@ function CompanyCard({company}:{company:typeof companies[number]}) {
 export default function App() {
   const [menuOpen,setMenuOpen] = useState(false)
   const [scrolled,setScrolled] = useState(false)
+  const [newsIndex,setNewsIndex] = useState(0)
   const getArticleFromHash = (): 'btv' | 'vuka' | 'forum' | null => {
     if (window.location.hash === '#artigo-btv-tvcabo') return 'btv'
     if (window.location.hash === '#artigo-salvador-maiaze-cta') return 'vuka'
@@ -165,6 +166,24 @@ export default function App() {
     return () => window.removeEventListener('scroll', fn)
   },[])
   useEffect(() => {
+    if (!menuOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    const closeOnResize = () => {
+      if (window.innerWidth > 800) setMenuOpen(false)
+    }
+    document.addEventListener('keydown',closeOnEscape)
+    window.addEventListener('resize',closeOnResize,{passive:true})
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown',closeOnEscape)
+      window.removeEventListener('resize',closeOnResize)
+    }
+  },[menuOpen])
+  useEffect(() => {
     // Cada vista monta elementos diferentes. Reobservar ao alternar entre notícia e página inicial
     // impede que a classe de animação deixe secções invisíveis.
     const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
@@ -174,10 +193,15 @@ export default function App() {
       targets.forEach(el => el.classList.add('is-visible'))
       return
     }
+    const revealOnce = window.matchMedia('(max-width: 800px), (hover: none)').matches
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible')
-        else entry.target.classList.remove('is-visible')
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          if (revealOnce) observer.unobserve(entry.target)
+        } else if (!revealOnce) {
+          entry.target.classList.remove('is-visible')
+        }
       })
     }, {threshold: .08, rootMargin: '0px 0px 35px 0px'})
     targets.forEach(el => observer.observe(el))
@@ -226,13 +250,15 @@ export default function App() {
   return <>
     <header className={'site-header '+(scrolled?'is-scrolled':'')}>
       <div className="container header-inner">
-        <Logo/><nav className={menuOpen?'nav-links open':'nav-links'} aria-label="Navegação principal">
+        <Logo onNavigate={closeMenu}/><nav id="principal-navigation" className={menuOpen?'nav-links open':'nav-links'} aria-label="Navegação principal">
           <a onClick={closeMenu} href="#inicio">Início</a><a onClick={closeMenu} href="#sobre">Sobre</a><a onClick={closeMenu} href="#empresas">Empresas</a><a onClick={closeMenu} href="#actuacao">Áreas de actuação</a><a onClick={closeMenu} href="#actualidade">Actualidade</a><a onClick={closeMenu} href="#contactos">Contactos</a>
         </nav>
-        <a className="header-cta" href="#contactos"><span>Fale connosco</span><ArrowUpRight size={17}/></a>
-        <button type="button" className="menu-toggle" aria-label={menuOpen?'Fechar menu':'Abrir menu'} aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
+        <a className="header-cta" onClick={closeMenu} href="#contactos" aria-label="Contactar o Grupo Mbewu"><span>Fale connosco</span><ArrowUpRight size={17}/></a>
+        <button type="button" className="menu-toggle" aria-label={menuOpen?'Fechar menu':'Abrir menu'} aria-controls="principal-navigation" aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
       </div>
     </header>
+    {menuOpen && <button type="button" className="mobile-nav-backdrop" aria-label="Fechar menu" onClick={closeMenu}/>}
+
     {legalPage ? <LegalContent page={legalPage} onBack={closeLegal} onNavigate={openLegal} onOpenPreferences={openCookiePreferences}/> : !articleOpen ? <main>
       <section id="inicio" className="hero hero-identity">
         <div className="hero-ambient hero-ambient-one" aria-hidden="true"/>
@@ -335,11 +361,20 @@ export default function App() {
               <p>Notícias, projectos e iniciativas das empresas do Grupo Mbewu.</p>
             </div>
             <div className="news-controls" aria-label="Navegação dos destaques">
+              <span className="news-mobile-counter" aria-live="polite">{newsIndex+1} / 3</span>
               <button className="news-arrow" type="button" onClick={() => moveNews(-1)} aria-label="Ver destaques anteriores"><ArrowRight size={21} className="news-arrow-back"/></button>
               <button className="news-arrow" type="button" onClick={() => moveNews(1)} aria-label="Ver destaques seguintes"><ArrowRight size={21}/></button>
             </div>
           </div>
-          <div className="news-track" ref={newsTrackRef} role="region" aria-label="Carrossel de acontecimentos" tabIndex={0}>
+          <div className="news-track" ref={newsTrackRef} role="region" aria-roledescription="carrossel" aria-label="Carrossel de acontecimentos" tabIndex={0}
+            onScroll={event => {
+              const track = event.currentTarget
+              const firstCard = track.querySelector<HTMLElement>('.news-card')
+              if (!firstCard) return
+              const gap = 22
+              const step = firstCard.getBoundingClientRect().width + gap
+              setNewsIndex(Math.min(2,Math.max(0,Math.round(track.scrollLeft/step))))
+            }}>
             {[
               {label:'BTV · EXPANSÃO',heading:'BTV reforça presença nacional com entrada na TVCABO',number:'01',icon:Tv,date:'23 de Setembro de 2026',excerpt:'Desde 1 de Outubro, o canal integra a grelha da TVCABO na posição 323, alargando o acesso à informação, cultura e entretenimento produzidos em Moçambique.',image:'https://supabase.datacenterhub.tech/storage/v1/object/public/bnews-media/library/1790190834153-422c6627-btv-easy-resize.webp',url:'https://bnews.co.mz/artigo/btv-chega-tvcabo-e-abre-nova-etapa-de-expans-o'},
               {label:'VUKA LOGÍSTICA · INTERNACIONALIZAÇÃO',heading:'Vuka Logística Reforça Presença Internacional em Missão Empresarial da CTA aos EUA',number:'02',icon:Truck,date:null,excerpt:'Em representação da Vuka Logística & Serviços, Salvador Maiaze participou numa missão empresarial orientada para novas oportunidades de cooperação económica internacional.',image:salvadorMissaoFoto,url:'#artigo-salvador-maiaze-cta'},

@@ -593,3 +593,199 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
   .brand-original-symbol{width:44px;height:44px}
   .brand-original-wordmark{width:117px;height:44px}
 }
+
+/* Montra de empresas — melhoramentos exclusivos da versão móvel.
+   Grelha compacta, eixo visual consistente, linhas discretas e animação
+   escalonada sobre o IntersectionObserver que já existe no projecto. */
+@media (max-width:680px){
+  .companies-section{
+    padding-top:72px;
+    padding-bottom:78px;
+  }
+  .companies-section .companies-heading{
+    margin-bottom:28px;
+  }
+  .companies-section .companies-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-auto-rows:max-content;
+    align-items:start;
+    column-gap:clamp(18px,4.3vw,27px);
+    row-gap:32px;
+  }
+  .companies-section .company-card,
+  .companies-section .company-card:hover{
+    position:relative;
+    align-self:start;
+    display:flex;
+    flex-direction:column;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    padding:0;
+    margin:0;
+    transform:none;
+  }
+  .companies-section .company-logo-stage{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:104px;
+    min-height:104px;
+    margin:0 0 12px;
+    overflow:hidden;
+    transform-origin:center;
+  }
+  .companies-section .company-card-content{
+    flex:0 0 auto;
+    padding:0;
+  }
+  .companies-section .company-card-content h3{
+    font:750 clamp(14px,3.45vw,17px)/1.35 var(--font-display);
+    letter-spacing:-.034em;
+    margin:0 0 10px;
+    min-height:0;
+    text-wrap:pretty;
+  }
+  .companies-section .company-card-content p{
+    font-size:clamp(11px,2.85vw,12.5px);
+    line-height:1.68;
+    margin:0;
+    min-height:0;
+  }
+  .companies-section .company-card-action{
+    min-height:0;
+    margin-top:13px;
+    padding:0;
+  }
+  .companies-section .company-card-action:empty{
+    display:none;
+    min-height:0;
+    margin:0;
+    padding:0;
+  }
+  .companies-section .company-card-action .company-link{
+    font-size:12px;
+    min-height:27px;
+  }
+  /* A divisória pertence ao espaço entre colunas, não aos logótipos. */
+  .companies-section .company-card:nth-child(2n)::before{
+    content:"";
+    position:absolute;
+    left:calc(clamp(18px,4.3vw,27px) / -2);
+    top:6px;
+    bottom:0;
+    width:1px;
+    background:rgba(242,238,232,.15);
+    transform-origin:top center;
+    pointer-events:none;
+  }
+  .companies-section .company-card:nth-child(-n+4)::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-17px;
+    height:1px;
+    background:rgba(242,238,232,.08);
+    transform-origin:left center;
+    pointer-events:none;
+  }
+}
+/* Movimento de entrada repetível com a visibilidade da secção.
+   Apenas no táctil / ecrã móvel e sem bloquear o conteúdo se JS falhar. */
+@media (max-width:680px) and (prefers-reduced-motion:no-preference){
+  html.motion-ready .companies-section .company-card[data-reveal]{
+    opacity:0;
+    transform:translate3d(0,25px,0) !important;
+    transition:opacity .75s var(--motion-ease),
+               transform .9s var(--motion-ease) !important;
+    transition-delay:0s;
+  }
+  html.motion-ready .companies-section .company-card[data-reveal]:nth-child(2n){
+    transition-delay:.12s !important;
+  }
+  html.motion-ready .companies-section .company-card[data-reveal].is-visible{
+    opacity:1;
+    transform:translate3d(0,0,0) !important;
+  }
+  html.motion-ready .companies-section .company-card[data-reveal] .company-logo-stage{
+    opacity:0;
+    transform:translate3d(0,14px,0) scale(.94);
+    transition:opacity .85s var(--motion-ease),
+               transform 1.05s var(--motion-ease);
+  }
+  html.motion-ready .companies-section .company-card[data-reveal].is-visible .company-logo-stage{
+    opacity:1;
+    transform:translate3d(0,0,0) scale(1);
+    transition-delay:.14s;
+  }
+  html.motion-ready .companies-section .company-card[data-reveal] .company-card-content,
+  html.motion-ready .companies-section .company-card[data-reveal] .company-card-action{
+    opacity:0;
+    transform:translate3d(0,12px,0);
+    transition:opacity .7s var(--motion-ease),
+               transform .8s var(--motion-ease);
+  }
+  html.motion-ready .companies-section .company-card[data-reveal].is-visible .company-card-content{
+    opacity:1;
+    transform:none;
+    transition-delay:.25s;
+  }
+  html.motion-ready .companies-section .company-card[data-reveal].is-visible .company-card-action{
+    opacity:1;
+    transform:none;
+    transition-delay:.36s;
+  }
+  html.motion-ready .companies-section .company-card:nth-child(2n)::before{
+    transform:scaleY(0);
+    opacity:0;
+    transition:transform 1.05s var(--motion-ease),opacity .6s ease;
+  }
+  html.motion-ready .companies-section .company-card:nth-child(2n).is-visible::before{
+    transform:scaleY(1);
+    opacity:1;
+    transition-delay:.15s;
+  }
+  html.motion-ready .companies-section .company-card:nth-child(-n+4)::after{
+    transform:scaleX(0);
+    opacity:0;
+    transition:transform 1.05s var(--motion-ease),opacity .6s ease;
+  }
+  html.motion-ready .companies-section .company-card:nth-child(-n+4).is-visible::after{
+    transform:scaleX(1);
+    opacity:1;
+    transition-delay:.3s;
+  }
+  @media (hover:none){
+    .companies-section .company-card:hover .company-logo-art{
+      filter:none!important;
+    }
+  }
+}
+@media (max-width:360px){
+  .companies-section .companies-grid{
+    grid-template-columns:1fr;
+    row-gap:22px;
+  }
+  .companies-section .company-card{
+    padding-bottom:17px;
+  }
+  .companies-section .company-card:nth-child(2n)::before{
+    display:none;
+  }
+  .companies-section .company-card:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    left:0;right:0;bottom:0;height:1px;
+    display:block;
+    background:rgba(242,238,232,.10);
+  }
+  .companies-section .company-logo-stage{
+    height:116px;
+    min-height:116px;
+  }
+  .companies-section .company-card-content h3{font-size:17px}
+  .companies-section .company-card-content p{font-size:13px}
+}

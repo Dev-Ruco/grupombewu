@@ -10,7 +10,7 @@ import presidenteFoto from './assets/images/presidente/presidente.jpg'
 import grupoMbewuLogo from './assets/logos/grupo/grupo-mbewu.png'
 import salvadorMissaoFoto from './assets/images/Salvador Maiaze.jpeg'
 import forumPortugalFoto from './assets/images/Presidente-da-República-discursa-no-Fórum-Económico-Portugal-Moçambique-na-Cidade-do-Porto10-e1765356290135.jpeg'
-import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, CarFront, ChevronDown, Handshake, Layers3, Mail, MapPin, Phone, Menu, Music2, Play, ShieldCheck, Truck, Tv, X, CheckCircle2, Target, Instagram, Facebook, Youtube, Linkedin, Newspaper } from 'lucide-react'
 
 const companies = [
   { id: 'bawito', name: 'Bawito Music & Serviços', category: 'MÚSICA & EVENTOS', short: 'Gestão artística, produção e serviços ligados ao entretenimento.', logo: bawitoLogo, accent: 'blue' },
@@ -20,6 +20,35 @@ const companies = [
   { id: 'mlc', name: 'Maputo Luxury Cars', category: 'MOBILIDADE PREMIUM', short: 'Serviços de transporte com motorista e soluções de mobilidade premium.', logo: mlcLogo, accent: 'copper', url: 'https://maputoluxurycars.co.mz/' },
   { id: 'bnews', name: 'BNEWS', category: 'INFORMAÇÃO', short: 'Notícias, actualidade e conteúdos informativos.', logo: bnewsLogo, accent: 'red', url: 'https://bnews.co.mz/' },
 ] as const
+
+
+/* Portefólio institucional: acrescentar fotografias reais a cada lista
+   quando forem fornecidas, com importações de ficheiros locais. O modelo
+   suporta várias imagens por empresa sem alterar a estrutura da secção. */
+type ShowcasePhoto = { src: string; alt: string }
+type CompanyId = (typeof companies)[number]['id']
+const showcasePhotos: Record<CompanyId, ShowcasePhoto[]> = {
+  bawito: [],
+  vuka: [],
+  btv: [],
+  security: [],
+  mlc: [],
+  bnews: [],
+}
+const showcaseIcons = {
+  bawito: Music2,
+  vuka: Truck,
+  btv: Tv,
+  security: ShieldCheck,
+  mlc: CarFront,
+  bnews: Newspaper,
+}
+const showcaseEntries = companies.flatMap(company => {
+  const photos = showcasePhotos[company.id]
+  return photos.length
+    ? photos.map((photo, index) => ({ company, photo, index }))
+    : [{ company, photo: null, index: 0 }]
+})
 
 const services = [
   { name: 'Media', text: 'Comunicação, informação e entretenimento.', icon: Tv },
@@ -234,6 +263,37 @@ export default function App() {
         <div data-reveal className="section-heading strengths-heading"><div><span className="eyebrow"><span className="tiny-line"/> A NOSSA ABORDAGEM</span><h2>Mais do que empresas.<br/><em>Uma visão de futuro.</em></h2></div><p>Construímos o nosso percurso através da diversidade de competências e de uma aposta na colaboração.</p></div>
         <div className="strengths-grid">{strengths.map((strength)=><article data-reveal className="strength-card" key={strength.name}><strength.icon size={30} strokeWidth={1.5}/><h3>{strength.name}</h3><p>{strength.text}</p></article>)}</div>
       </div></section>
+      <section id="em-accao" className="showcase-section" aria-labelledby="showcase-title">
+        <div className="container">
+          <header data-reveal className="showcase-heading">
+            <div>
+              <span className="eyebrow dark-eyebrow">PRESENÇA MULTISSECTORIAL</span>
+              <h2 id="showcase-title">O Grupo <em>em acção.</em></h2>
+            </div>
+            <p>Seis empresas, diferentes áreas de actividade e uma visão comum. Um espaço dedicado à expressão visual do nosso universo empresarial.</p>
+          </header>
+          <div className="showcase-grid" aria-label="Apresentação visual das empresas do Grupo Mbewu">
+            {showcaseEntries.map(({company,photo,index},order) => {
+              const Icon = showcaseIcons[company.id]
+              return <figure data-reveal className={'showcase-tile showcase-tile-'+company.id} key={company.id+'-'+index}>
+                <div className="showcase-image-frame">
+                  {photo ? <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="showcase-photo"/> :
+                    <div className="showcase-placeholder">
+                      <Icon size={45} strokeWidth={1.2} aria-hidden="true"/>
+                      <span>FOTOGRAFIA EM PREPARAÇÃO</span>
+                    </div>}
+                  <span aria-hidden="true" className="showcase-image-index">{String(order+1).padStart(2,'0')}</span>
+                </div>
+                <figcaption className="showcase-caption">
+                  <strong>{company.name}</strong>
+                  <span>{company.category}</span>
+                </figcaption>
+              </figure>
+            })}
+          </div>
+          <p className="showcase-note">As fotografias institucionais das empresas serão acrescentadas a esta secção.</p>
+        </div>
+      </section>
       <section id="presidencia" className="president-section" aria-labelledby="president-title">
         <div className="container president-layout">
           <div data-reveal className="president-visual">

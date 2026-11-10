@@ -43,7 +43,12 @@ const showcaseIcons = {
   mlc: CarFront,
   bnews: Newspaper,
 }
-const showcaseEntries = companies.flatMap(company => {
+type ShowcaseEntry = {
+  company: (typeof companies)[number]
+  photo: ShowcasePhoto | null
+  index: number
+}
+const showcaseEntries: ShowcaseEntry[] = companies.flatMap<ShowcaseEntry>(company => {
   const photos = showcasePhotos[company.id]
   return photos.length
     ? photos.map((photo, index) => ({ company, photo, index }))

@@ -1,0 +1,29 @@
+# Dependências e saída de compilação local
+node_modules
+dist
+build
+coverage
+.cache
+
+# Git e ferramentas de desenvolvimento
+.git
+.gitignore
+.vscode
+.idea
+.vercel
+
+# Credenciais e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs e ficheiros do sistema
+*.log
+npm-debug.log*
+.DS_Store
+
+# Evitar documentação e artefactos não utilizados na imagem
+README.md
+DEPLOY_COOLIFY.md

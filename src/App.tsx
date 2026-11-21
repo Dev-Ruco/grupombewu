@@ -80,7 +80,7 @@ function Logo({footer=false,onNavigate}:{footer?:boolean;onNavigate?:()=>void}) 
   // O recorte preserva os desenhos originais e remove só o fundo grafite do PNG.
   const filterId = footer ? 'mbewu-logo-ink-footer' : 'mbewu-logo-ink-header'
   return <a href="#inicio" onClick={onNavigate} className={footer ? 'brand footer-brand' : 'brand'} aria-label="Grupo Mbewu — início">
-    <svg className="brand-original-symbol" viewBox="325 167 605 537" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <svg className="brand-original-symbol" viewBox={footer ? "325 167 605 537" : "290 137 675 620"} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <filter id={filterId} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
           <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="brightness"/>
@@ -93,7 +93,7 @@ function Logo({footer=false,onNavigate}:{footer?:boolean;onNavigate?:()=>void}) 
       </defs>
       <image href={grupoMbewuLogo} width="1254" height="1254" filter={`url(#${filterId})`}/>
     </svg>
-    <svg className="brand-original-wordmark" viewBox="171 692 919 350" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <svg className="brand-original-wordmark" viewBox={footer ? "171 692 919 350" : "145 650 975 470"} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <image href={grupoMbewuLogo} width="1254" height="1254" filter={`url(#${filterId})`}/>
     </svg>
   </a>

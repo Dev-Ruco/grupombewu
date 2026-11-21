@@ -566,32 +566,35 @@ html.motion-ready .contact-symbol[data-reveal]{transition-delay:.12s}
   flex-shrink:0;
   max-width:100%;
 }
-.brand-original-symbol{
-  display:block;
-  flex:0 0 auto;
-  width:62px;
-  height:62px;
-  overflow:hidden;
-}
+.brand-original-symbol,
 .brand-original-wordmark{
   display:block;
   flex:0 0 auto;
-  width:164px;
-  height:62px;
   overflow:hidden;
 }
+/* A assinatura no cabeçalho cabe integralmente nas duas alturas da barra.
+   Os recortes SVG têm margem adicional para não truncar a árvore ou as letras. */
+.site-header .brand-original-symbol{width:56px;height:56px}
+.site-header .brand-original-wordmark{width:127px;height:56px}
+.site-header.is-scrolled .brand-original-symbol{width:49px;height:49px}
+.site-header.is-scrolled .brand-original-wordmark{width:112px;height:49px}
+/* Manter a assinatura maior no rodapé, sem mexer na respectiva composição. */
 .footer-brand .brand-original-symbol{width:64px;height:64px}
 .footer-brand .brand-original-wordmark{width:170px;height:64px}
 @media(max-width:800px){
-  .brand-original-symbol{width:49px;height:49px}
-  .brand-original-wordmark{width:130px;height:49px}
+  .site-header .brand-original-symbol,
+  .site-header.is-scrolled .brand-original-symbol{width:44px;height:44px}
+  .site-header .brand-original-wordmark,
+  .site-header.is-scrolled .brand-original-wordmark{width:100px;height:44px}
   .footer-brand .brand-original-symbol{width:60px;height:60px}
   .footer-brand .brand-original-wordmark{width:159px;height:60px}
 }
 @media(max-width:390px){
   .brand:has(.brand-original-symbol){gap:5px}
-  .brand-original-symbol{width:44px;height:44px}
-  .brand-original-wordmark{width:117px;height:44px}
+  .site-header .brand-original-symbol,
+  .site-header.is-scrolled .brand-original-symbol{width:40px;height:40px}
+  .site-header .brand-original-wordmark,
+  .site-header.is-scrolled .brand-original-wordmark{width:91px;height:40px}
 }
 
 /* Montra de empresas — melhoramentos exclusivos da versão móvel.
